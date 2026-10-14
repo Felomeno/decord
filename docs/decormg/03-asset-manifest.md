@@ -54,7 +54,7 @@ Leyenda de estado: **OK-demo** (se usa en la demo, permiso pendiente) · **Exclu
 
 ## Resumen
 
-- Imágenes reales usadas: 24 (ninguna de stock).
+- Imágenes reales usadas: 23 (ninguna de stock).
 - Antes/después reales del mismo espacio: 4 parejas (cocina, Las Águilas, Lucero, Villaverde). Encuadres distintos → se muestran **lado a lado**, sin comparador deslizante (un deslizador exige encuadres alineados y sugeriría una manipulación que no existe).
 - Recortes: `next/image` con `object-position` por imagen (punto focal en `src/content/images.ts`).
 - Pendiente: fotos originales en alta (sobre todo Instagram y Cronoshare), logo vectorial, autorización escrita, confirmación de autoría de fotos de Maps sin marca de agua.
