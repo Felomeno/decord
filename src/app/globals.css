@@ -365,9 +365,8 @@ a {
 }
 
 .wordmark small {
-  font-family: var(--font-sans);
-  font-size: var(--step-small);
-  font-weight: 500;
+  font-size: 1.0625rem;
+  font-weight: 400;
   letter-spacing: 0;
   color: var(--on-dark-muted);
 }
@@ -506,8 +505,8 @@ a {
 @media (prefers-reduced-motion: no-preference) {
   .menu-sheet[open] nav a > span {
     transform: none;
-    transition: transform 420ms var(--ease-out);
-    transition-delay: calc(var(--i, 0) * 45ms);
+    transition: transform 280ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 40ms);
   }
   @starting-style {
     .menu-sheet[open] nav a > span {
@@ -630,6 +629,10 @@ body {
   font-weight: 500;
 }
 
+.hero__top a {
+  white-space: nowrap;
+}
+
 .hero__strip {
   gap: 10px;
   padding-inline: var(--margin);
@@ -652,23 +655,27 @@ body {
   height: clamp(260px, 40svh, 380px);
 }
 
+/* Dimmed by opacity over the navy frame ground (compositor-only, unlike filter). */
+.hero-frame .frame {
+  background: var(--navy);
+}
+
 .hero-frame img {
-  transition: filter 420ms var(--ease-soft);
+  transition: opacity 360ms var(--ease-out);
 }
 
 .hero__strip[data-ready] .hero-frame:not([data-lit="true"]) img {
-  filter: brightness(0.55);
-  transition: filter 420ms var(--ease-soft);
+  opacity: 0.5;
 }
 
 .hero-frame[data-lit="true"] img,
 .hero-frame:focus-visible img {
-  filter: none;
+  opacity: 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .hero-frame:hover img {
-    filter: none;
+  .hero__strip[data-ready] .hero-frame:hover img {
+    opacity: 1;
   }
 }
 
@@ -860,14 +867,15 @@ body {
 .run__summary {
   width: 0;
   min-width: 100%;
-  font-size: var(--step-small);
-  color: var(--muted);
+  font-size: var(--step-body);
+  line-height: 1.45;
+  color: var(--ink);
 }
 
 .run img {
   transition:
     opacity var(--t-hover) ease,
-    transform 500ms var(--ease-soft);
+    transform 280ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1221,16 +1229,22 @@ body {
   gap: 32px;
 }
 
+@media (max-width: 1023px) {
+  .about__row > .facts {
+    order: 2;
+  }
+}
+
 .facts {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
-  font-size: var(--step-small);
   margin: 0;
 }
 
 .facts dt {
   color: var(--muted);
+  font-size: var(--step-small);
 }
 
 .facts dd {
@@ -1310,6 +1324,11 @@ body {
 .letter__sign {
   margin-top: 40px;
   font-size: var(--step-body);
+}
+
+.letter__aside {
+  grid-column: 1 / -1;
+  margin-bottom: 24px;
 }
 
 .letter__others {
@@ -1448,7 +1467,7 @@ body {
 
 .cell label {
   font-size: var(--step-small);
-  color: var(--on-dark-muted);
+  color: #d5e1ec;
 }
 
 .cell input,
@@ -1530,7 +1549,11 @@ body {
   gap: 8px;
   margin-top: 12px;
   font-size: var(--step-small);
-  color: var(--on-dark-muted);
+  color: #d5e1ec;
+}
+
+.contact-band .prose-link {
+  color: var(--on-dark);
 }
 
 .builder__preview {
@@ -1782,14 +1805,21 @@ body {
 
 .contact-aside {
   grid-column: 1 / -1;
+  max-width: 62ch;
   display: grid;
   align-content: start;
   gap: 16px;
 }
 
+.contact-aside .frame {
+  width: 180px;
+  height: 320px;
+}
+
 .steps {
   margin: 0;
   padding-left: 1.3em;
+  list-style: decimal;
   display: grid;
   gap: 10px;
 }
@@ -1813,28 +1843,58 @@ body {
 
 
 .page-head {
-  padding-top: clamp(48px, 7vw, 112px);
+  padding-top: clamp(40px, 6vw, 96px);
   padding-bottom: clamp(32px, 4vw, 64px);
 }
 
-.page-head__title {
+.page-head__grid {
+  row-gap: 32px;
+  align-items: end;
+}
+
+.page-head__text {
   grid-column: 1 / -1;
 }
 
 .page-head__lead {
-  grid-column: 1 / -1;
-  margin-top: 20px;
+  margin-top: 24px;
   max-width: 46ch;
 }
 
+.page-head__photo {
+  grid-column: 1 / -1;
+}
+
+.page-head__photo .frame {
+  aspect-ratio: 4 / 3;
+}
+
+/* Low-resolution originals keep their own ratio and are never stretched past it. */
+.page-head__photo--natural .frame {
+  aspect-ratio: auto;
+  height: min(64svh, 640px);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.page-head__photo--natural .frame img {
+  width: auto;
+}
+
 @media (min-width: 1024px) {
-  .page-head__title {
+  .page-head__text {
     grid-column: 1 / span 7;
   }
-  .page-head__lead {
-    grid-column: 8 / span 5;
-    margin-top: 0;
-    align-self: end;
+  .page-head--photo .page-head__text {
+    grid-column: 1 / span 6;
+    padding-bottom: 8px;
+  }
+  .page-head__photo {
+    grid-column: 7 / span 6;
+  }
+  .page-head__photo:not(.page-head__photo--natural) .frame {
+    aspect-ratio: auto;
+    height: min(72svh, 680px);
   }
 }
 

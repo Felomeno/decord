@@ -1,3 +1,5 @@
+import { photos, type Photo } from "./images";
+
 // Services DecorMG states in its own texts (Cronoshare description, Instagram bio and posts).
 // "includes" only lists work documented in a published job.
 
@@ -14,6 +16,7 @@ export type Service = {
   before: string[];
   faq: { q: string; a: string }[];
   builderType: string;
+  photo: Photo;
 };
 
 export const services: Service[] = [
@@ -44,6 +47,7 @@ export const services: Service[] = [
       { q: "¿Cuánto cuesta reformar un baño?", a: "Depende de las medidas, los materiales y el estado de las instalaciones. No publicamos precios cerrados: escríbenos con lo que quieres hacer y te damos presupuesto sin compromiso." },
     ],
     builderType: "Reforma de baño",
+    photo: photos.banoMarmol,
   },
   {
     slug: "reformas-de-cocinas",
@@ -71,6 +75,7 @@ export const services: Service[] = [
       { q: "¿Cuánto cuesta una cocina?", a: "Depende de los metros, los muebles y los electrodomésticos. Cuéntanos qué quieres y te preparamos un presupuesto sin compromiso." },
     ],
     builderType: "Reforma de cocina",
+    photo: photos.cocinaDespues,
   },
   {
     slug: "reformas-integrales",
@@ -99,6 +104,7 @@ export const services: Service[] = [
       { q: "¿Cuánto dura una reforma integral?", a: "Depende de los metros y de lo que haya que hacer. Pregúntanoslo al pedir presupuesto y lo vemos con tu caso." },
     ],
     builderType: "Reforma integral",
+    photo: photos.salon1,
   },
 ];
 

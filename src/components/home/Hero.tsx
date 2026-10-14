@@ -49,7 +49,7 @@ export function Hero() {
       </div>
 
       <div className="wrap grid-12 hero__bottom">
-        <h1 id="hero-title" className="t-display hero__title" data-rise style={{ ["--i" as string]: 0 }}>
+        <h1 id="hero-title" className="t-display hero__title">
           Baños, cocinas y pisos en Madrid
         </h1>
         <div className="hero__aside">

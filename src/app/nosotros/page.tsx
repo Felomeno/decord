@@ -21,6 +21,8 @@ export default function AboutPage() {
     <>
       <PageHead
         title="Nosotros"
+        large
+        photo={photos.cocinaObra}
         crumbs={[{ name: "Nosotros", path: "/nosotros" }]}
         lead={
           <p>

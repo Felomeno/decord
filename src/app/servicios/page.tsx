@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ContactSheet } from "@/components/ContactSheet";
 import { ContactBand } from "@/components/home/ContactBand";
 import { PageHead } from "@/components/PageHead";
+import { photos } from "@/content/images";
 import { projects } from "@/content/projects";
 import { otherWorks, services } from "@/content/services";
 
@@ -18,6 +19,8 @@ export default function ServicesPage() {
     <>
       <PageHead
         title="Servicios"
+        large
+        photo={photos.banoLaton}
         crumbs={[{ name: "Servicios", path: "/servicios" }]}
         lead={<p>Reformas completas y trabajos sueltos en la Comunidad de Madrid. Sin precios cerrados: cada obra se presupuesta con sus datos.</p>}
       />

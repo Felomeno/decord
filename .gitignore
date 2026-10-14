@@ -42,3 +42,6 @@ next-env.d.ts
 
 # design QA working files
 /.taste-skill/
+
+# browser QA screenshots
+/qa-output/

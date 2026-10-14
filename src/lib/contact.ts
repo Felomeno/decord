@@ -20,7 +20,7 @@ export type BriefInput = {
 /** The message the visitor sends. Kept short and in the visitor's voice. */
 export function composeBrief({ type, area, details, name, preference, project }: BriefInput) {
   const lines = [
-    `Hola, ${name?.trim() ? `soy ${name.trim()}. ` : ""}quiero pedir presupuesto.`,
+    name?.trim() ? `Hola, soy ${name.trim()}. Quiero pedir presupuesto.` : "Hola, quiero pedir presupuesto.",
     `Tipo de obra: ${type || "sin decidir"}`,
     `Zona: ${area.trim() || "sin indicar"}`,
   ];

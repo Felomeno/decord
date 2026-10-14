@@ -17,7 +17,7 @@ const BIG_H = 560;
  */
 export function ContactSheet({ projects, bigSlug }: Props) {
   return (
-    <div className="sheet">
+    <div className="sheet" data-reveal>
       {projects.map((project) => {
         const big = project.slug === bigSlug;
         const h = big ? BIG_H : FRAME_H;

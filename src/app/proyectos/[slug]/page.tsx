@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Frame } from "@/components/Frame";
@@ -26,7 +27,16 @@ export async function generateMetadata({ params }: PageProps<"/proyectos/[slug]"
   };
 }
 
-export default async function ProjectPage({ params }: PageProps<"/proyectos/[slug]">) {
+// Params are known at build time (generateStaticParams); the boundary keeps the App Shell URL-free.
+export default function ProjectPage({ params }: PageProps<"/proyectos/[slug]">) {
+  return (
+    <Suspense fallback={<p className="wrap section t-muted">Cargando la obra…</p>}>
+      <ProjectContent params={params} />
+    </Suspense>
+  );
+}
+
+async function ProjectContent({ params }: { params: PageProps<"/proyectos/[slug]">["params"] }) {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
@@ -37,6 +47,9 @@ export default async function ProjectPage({ params }: PageProps<"/proyectos/[slu
   const service = project.service ? getService(project.service) : undefined;
   const message = `Hola, he visto la obra «${project.title}» en vuestra web y quiero pedir presupuesto para algo parecido.`;
   const sources = Array.from(new Set(project.frames.map((f) => sourceLabel[f.photo.source])));
+  const cover = project.frames[project.frames.length - 1].photo;
+  const pairPhotos = project.pair ? [project.pair.before, project.pair.after] : [];
+  const extraFrames = project.frames.filter((frame) => !pairPhotos.includes(frame.photo));
   const wide = project.pair ? project.pair.after.width > project.pair.after.height : false;
 
   return (
@@ -48,6 +61,7 @@ export default async function ProjectPage({ params }: PageProps<"/proyectos/[slu
           { name: project.title, path: `/proyectos/${project.slug}` },
         ]}
         lead={<p>{project.summary}</p>}
+        photo={cover.height >= 600 ? cover : undefined}
       />
 
       <section className="bg-paper" aria-labelledby="hecho-title" style={{ paddingBottom: 96 }}>
@@ -128,13 +142,14 @@ export default async function ProjectPage({ params }: PageProps<"/proyectos/[slu
         </section>
       ) : null}
 
+      {extraFrames.length ? (
       <section className="section bg-paper" aria-labelledby="fotos-title">
         <div className="wrap">
           <h2 id="fotos-title" className="t-h2" style={{ marginBottom: 32 }}>
             Fotos
           </h2>
           <div className="gallery">
-            {project.frames.map((frame, i) => (
+            {extraFrames.map((frame, i) => (
               <figure key={i} style={{ margin: 0 }}>
                 <Frame photo={frame.photo} fill sizes="(max-width: 767px) 50vw, 33vw" priority={i === 0 && !project.pair} />
                 <figcaption className="t-small" style={{ marginTop: 8 }}>
@@ -149,6 +164,7 @@ export default async function ProjectPage({ params }: PageProps<"/proyectos/[slu
           </p>
         </div>
       </section>
+      ) : null}
 
       <section className="section bg-navy on-dark" aria-labelledby="pedir-title">
         <div className="wrap grid-12" data-reveal>

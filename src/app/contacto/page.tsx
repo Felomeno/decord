@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { WhatsAppIcon, PhoneIcon } from "@/components/icons";
+import { Frame } from "@/components/Frame";
+import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
+import { photos } from "@/content/images";
 import { BusinessJsonLd } from "@/components/JsonLd";
 import { MessageBuilder } from "@/components/MessageBuilder";
 import { PageHead } from "@/components/PageHead";
@@ -20,6 +22,7 @@ export default function ContactPage() {
       <BusinessJsonLd />
       <PageHead
         title="Pide presupuesto"
+        large
         crumbs={[{ name: "Contacto", path: "/contacto" }]}
         lead={<p>Rellena lo básico y se abre WhatsApp con tu mensaje escrito. Si prefieres, llama directamente.</p>}
       />
@@ -31,6 +34,12 @@ export default function ContactPage() {
           </div>
 
           <aside className="contact-aside" aria-labelledby="despues-title">
+            <figure style={{ margin: "0 0 16px" }}>
+              <Frame photo={photos.equipo} height={320} sizes="180px" />
+              <figcaption className="t-small t-muted" style={{ marginTop: 8 }}>
+                Equipo de DecorMG en obra (foto de su Instagram).
+              </figcaption>
+            </figure>
             <h2 id="despues-title" className="t-lead" style={{ fontFamily: "var(--font-serif)", fontWeight: 500 }}>
               Qué pasa después
             </h2>
@@ -39,7 +48,7 @@ export default function ContactPage() {
               <li>DecorMG te contesta por ese chat o te llama, según hayas elegido.</li>
               <li>Con los datos de tu obra te preparan un presupuesto sin compromiso.</li>
             </ol>
-            <p className="t-small t-muted">
+            <p className="t-muted">
               Esta web no guarda lo que escribes: el mensaje viaja solo por tu WhatsApp. No te pedimos la dirección
               completa en este primer contacto.
             </p>

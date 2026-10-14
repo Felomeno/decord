@@ -33,8 +33,9 @@ export const site = {
     reviewCount: 26,
     checkedOn: "14 de octubre de 2026",
   },
-  // Demo deployment: keep false until DecorMG approves the site and a domain exists.
-  indexable: false,
+  // Demo deployments stay out of search engines. Set NEXT_PUBLIC_SITE_INDEXABLE=true only on the
+  // approved production domain (see README).
+  indexable: process.env.NEXT_PUBLIC_SITE_INDEXABLE === "true",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 } as const;
 

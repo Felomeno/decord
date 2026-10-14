@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ContactSheet } from "@/components/ContactSheet";
@@ -23,7 +24,16 @@ export async function generateMetadata({ params }: PageProps<"/servicios/[slug]"
   };
 }
 
-export default async function ServicePage({ params }: PageProps<"/servicios/[slug]">) {
+// Params are known at build time (generateStaticParams); the boundary keeps the App Shell URL-free.
+export default function ServicePage({ params }: PageProps<"/servicios/[slug]">) {
+  return (
+    <Suspense fallback={<p className="wrap section t-muted">Cargando el servicio…</p>}>
+      <ServiceContent params={params} />
+    </Suspense>
+  );
+}
+
+async function ServiceContent({ params }: { params: PageProps<"/servicios/[slug]">["params"] }) {
   const { slug } = await params;
   const service = getService(slug);
   if (!service) notFound();
@@ -40,6 +50,7 @@ export default async function ServicePage({ params }: PageProps<"/servicios/[slu
           { name: service.name, path: `/servicios/${service.slug}` },
         ]}
         lead={<p>{service.intro}</p>}
+        photo={service.photo}
       />
 
       <section className="bg-paper" aria-labelledby="incluye-title" style={{ paddingBottom: "var(--section)" }}>
@@ -98,7 +109,7 @@ export default async function ServicePage({ params }: PageProps<"/servicios/[slu
 
       <ContactBand defaultType={service.builderType} title={`Pide presupuesto: ${service.short.toLowerCase()}`} />
 
-      <nav className="wrap section t-small" aria-label="Otros servicios" style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+      <nav className="wrap t-small" aria-label="Otros servicios" style={{ display: "flex", gap: 24, flexWrap: "wrap", paddingBlock: 48 }}>
         <span className="t-muted">Otros servicios:</span>
         {others.map((s) => (
           <Link key={s.slug} href={`/servicios/${s.slug}`} className="prose-link">

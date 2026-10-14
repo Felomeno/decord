@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ContactSheet } from "@/components/ContactSheet";
 import { ContactBand } from "@/components/home/ContactBand";
 import { PageHead } from "@/components/PageHead";
+import { photos } from "@/content/images";
 import { kindLabel, kindOrder, projects } from "@/content/projects";
 
 export const metadata: Metadata = {
@@ -20,6 +21,8 @@ export default function ProjectsPage() {
     <>
       <PageHead
         title="Obras"
+        large
+        photo={photos.cocinaAbierta}
         crumbs={[{ name: "Obras", path: "/proyectos" }]}
         lead={
           <p>
