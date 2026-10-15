@@ -139,24 +139,49 @@ export function ScrollMotion() {
               }
             });
 
-          /* Scroll scrub: a few photos drift with the scroll. */
-          const heroImg = document.querySelector<HTMLElement>(".hero__media .frame img");
+          /* Hero: the title rises line by line out of a mask, then the text, buttons and proof follow.
+             CSS keeps the copy hidden until this runs (with a 2.5 s failsafe), so nothing flashes. */
           const hero = document.querySelector<HTMLElement>(".hero");
-          if (heroImg && hero) {
-            gsap.fromTo(heroImg, { scale: 1.2 }, { scale: 1.1, duration: 1.6, ease: EASE });
-            gsap.to(heroImg, {
-              yPercent: 8,
-              ease: "none",
-              scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true },
-            });
-            if (desktop) {
-              gsap.to(".hero__copy", {
-                y: -90,
-                opacity: 0.35,
+          const heroCopy = hero?.querySelector<HTMLElement>(".hero__copy");
+          if (hero && heroCopy) {
+            const title = heroCopy.querySelector<HTMLElement>("h1");
+            const rest = Array.from(heroCopy.children).filter((child) => child !== title);
+            if (title) {
+              gsap.set(title, { opacity: 1 });
+              SplitText.create(title, {
+                type: "lines",
+                mask: "lines",
+                autoSplit: true,
+                onSplit: (self) =>
+                  gsap.fromTo(
+                    self.lines,
+                    { yPercent: 105 },
+                    { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.1, delay: 0.15 },
+                  ),
+              });
+            }
+            gsap.fromTo(
+              rest,
+              { opacity: 0, y: 26 },
+              { opacity: 1, y: 0, duration: 0.9, ease: EASE, stagger: 0.1, delay: 0.55, clearProps: "transform" },
+            );
+
+            /* Scroll scrub: the footage settles on load, then drifts and the copy recedes as the hero leaves. */
+            const media = hero.querySelector<HTMLElement>(".hero__media");
+            if (media) {
+              gsap.fromTo(media, { scale: 1.12 }, { scale: 1.04, duration: 2, ease: EASE });
+              gsap.to(media, {
+                yPercent: 10,
                 ease: "none",
                 scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true },
               });
             }
+            gsap.to(heroCopy, {
+              y: desktop ? -110 : -50,
+              opacity: 0.2,
+              ease: "none",
+              scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true },
+            });
           }
 
           gsap.utils.toArray<HTMLElement>(`.phead__photo .frame img, ${DRIFT} img`).forEach((img) => {

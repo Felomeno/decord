@@ -34,7 +34,7 @@ const slug = (route) => (route === "/" ? "home" : route.slice(1).replaceAll("/",
 const leftovers = () =>
   [...document.querySelectorAll("main *")]
     .filter((el) => {
-      if (el.closest(".ba, .hero__copy")) return false; // driven by scroll position on purpose
+      if (el.closest(".ba, .hero")) return false; // driven by scroll position on purpose
       const cs = getComputedStyle(el);
       const r = el.getBoundingClientRect();
       if (!r.width || !r.height) return false;

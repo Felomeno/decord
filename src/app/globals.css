@@ -33,7 +33,7 @@
   --whatsapp: #25d366; /* WhatsApp brand green; black text on it 10:1 */
   --whatsapp-hover: #4be083;
 
-  --step-hero: clamp(2.875rem, 1.55rem + 5.2vw, 6.25rem);
+  --step-hero: clamp(2.875rem, 1.4rem + 5.8vw, 7rem);
   --step-h1: clamp(2.625rem, 1.5rem + 4.4vw, 5.25rem);
   --step-h2: clamp(2.125rem, 1.35rem + 3.1vw, 4.125rem);
   --step-h3: clamp(1.1875rem, 1.05rem + 0.5vw, 1.5rem);
@@ -385,6 +385,7 @@ img {
 
 .tag--dark {
   background: rgb(9 11 14 / 0.78);
+  color: var(--offwhite);
   border: 1px solid var(--line-strong);
 }
 
@@ -700,7 +701,9 @@ img {
   object-fit: cover;
 }
 
-/* ───────────────────────── Hero ───────────────────────── */
+/* ───────────────────────── Hero ─────────────────────────
+   Full screen under the sticky header: the job (video loop or poster photo) fills the frame,
+   a black scrim keeps the white type readable, the copy sits centred over it. */
 
 .hero {
   position: relative;
@@ -715,52 +718,83 @@ img {
   z-index: -1;
 }
 
-.hero__media .frame {
+.hero__media picture,
+.hero__media img,
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
-/* Phone: the photo fills the screen; a scrim only under the text, top half stays bright. */
+.hero__video {
+  opacity: 0;
+  transition: opacity 900ms ease;
+}
+
+.hero__video.is-playing {
+  opacity: 1;
+}
+
+/* Darker at the foot (where the next section starts) and behind the type, light at the top. */
 .hero__media::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgb(9 11 14 / 0) 12%, rgb(9 11 14 / 0.72) 34%, rgb(9 11 14 / 0.9) 52%, var(--bg) 90%);
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 52%, rgb(9 11 14 / 0.38), rgb(9 11 14 / 0) 70%),
+    linear-gradient(to bottom, rgb(9 11 14 / 0.42) 0%, rgb(9 11 14 / 0.3) 30%, rgb(9 11 14 / 0.5) 70%, rgb(9 11 14 / 0.92) 100%);
 }
 
 .hero__inner {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: min(calc(100svh - var(--header-h) - 30px), 860px);
-  padding-block: 120px 40px;
+  align-items: center;
+  justify-content: center;
+  min-height: max(600px, calc(100svh - var(--header-h)));
+  padding-block: 88px 112px;
+  text-align: center;
 }
 
 .hero__copy {
-  max-width: 640px;
+  max-width: 1040px;
+  margin-inline: auto;
+}
+
+.hero__copy .kicker {
+  justify-content: center;
+  color: var(--offwhite);
 }
 
 .hero__title {
-  max-width: 13em;
+  text-shadow: 0 2px 24px rgb(9 11 14 / 0.35);
 }
 
 .hero__text {
-  margin-top: 18px;
+  margin: 22px auto 0;
   max-width: 46ch;
-  color: #e2e8ef;
+  color: #eef2f6;
+  text-shadow: 0 1px 12px rgb(9 11 14 / 0.5);
 }
 
 .hero__ctas {
-  margin-top: 28px;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.hero__ctas .btn--ghost {
+  background: rgb(9 11 14 / 0.35);
 }
 
 .hero__proof {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 8px 18px;
   margin-top: 26px;
   font-size: var(--step-small);
-  color: #e2e8ef;
+  color: #eef2f6;
 }
 
 .hero__proof a {
@@ -777,57 +811,41 @@ img {
   color: #f5c542;
 }
 
+/* Bottom left, clear of the floating WhatsApp button on the right. */
 .hero__caption {
   position: absolute;
-  right: var(--margin);
-  top: 20px;
+  left: var(--margin);
+  bottom: 24px;
   z-index: 1;
+}
+
+.hero__caption--desk {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hero__caption--desk {
+    display: inline-flex;
+  }
+  .hero__caption--mob {
+    display: none;
+  }
 }
 
 @media (max-width: 599px) {
   .hero__ctas .btn {
     flex: 1 1 100%;
   }
-  .hero__copy .kicker {
-    display: none;
-  }
-  /* Keep the proof line clear of the floating call and WhatsApp buttons. */
   .hero__inner {
-    padding-bottom: 92px;
+    align-items: flex-end;
+    padding-bottom: 140px;
   }
-}
-
-/* Desktop: split. Text on the dark ground, the photo bright on the right. */
-@media (min-width: 900px) {
-  .hero__media {
-    left: auto;
-    width: 50%;
-  }
-  .hero__media::after {
-    background: linear-gradient(to right, var(--bg) 0, rgb(9 11 14 / 0) 22%);
-  }
-  .hero__inner {
-    justify-content: center;
-    min-height: min(calc(100svh - var(--header-h) - 30px), 820px);
-    padding-block: 96px;
-  }
-  .hero__copy {
-    max-width: 48%;
-  }
+  /* Phones: the caption moves to the top so the floating buttons keep the foot clear. */
   .hero__caption {
-    top: 24px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .hero__media {
-    width: 42%;
-  }
-  .hero__copy {
-    max-width: 58%;
-  }
-  .hero__title {
-    max-width: none;
+    top: 16px;
+    bottom: auto;
+    left: auto;
+    right: var(--margin);
   }
 }
 
@@ -2328,13 +2346,20 @@ a.pcard:focus-visible {
     }
   }
 
-  .js .hero__copy > :not(h1) {
-    animation: rise-in 700ms var(--ease-out) both;
-    animation-delay: calc(var(--i, 1) * 90ms);
+  /* Hero copy waits for its GSAP entrance (ScrollMotion). Failsafe: shown after 2.5 s regardless. */
+  .js .hero__copy > * {
+    opacity: 0;
+    animation: hero-failsafe 0s 2.5s forwards;
   }
 
-  html:not(.gsap-on) .hero__media .frame img {
+  html:not(.gsap-on) .hero__media img {
     animation: hero-settle 1600ms var(--ease-out) both;
+  }
+}
+
+@keyframes hero-failsafe {
+  to {
+    opacity: 1;
   }
 }
 

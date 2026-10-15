@@ -124,3 +124,18 @@ A petición del usuario se sustituyen la paleta azul marino y la tipografía fut
 Solo `transform`, `opacity`, `clip-path` y una variable CSS. Sin secuestro del scroll ni saltos (CLS 0).
 
 **Verificación:** `scripts/motion-check.mjs` recorre `/`, `/servicios`, una obra y `/nosotros` con rueda de ratón en Edge a 1440×900 y 390×844, guarda capturas del antes/después fijado al 0, 50 y 100 % y falla si algo queda oculto o recortado, si hay errores de consola, si la navegación interna no reconstruye la capa, si con movimiento reducido sigue animando o si sin JS hay titulares o fotos ocultos: 0 fallos. `scripts/qa.mjs`: 0 fallos. Lighthouse `/`: escritorio 100 en todo salvo SEO 69 (noindex); móvil 88 (LCP 3,5 s, TBT 170 ms; antes 92) por el peso de GSAP, ScrollTrigger y SplitText.
+
+## 9. Hero a pantalla completa preparado para vídeo
+
+**Referencia analizada** (ClassicCarsSaar, Edge headless a 1440×900 y 390×844): `<section>` de `h-screen` con `min-h-[600px]`; `<video autoplay loop muted playsinline poster>` en `absolute inset-0 object-cover` con un único MP4 4K de 21,5 s (el mismo en móvil); encima, un degradado negro vertical del 30 % al 40 % y al 70 %; texto centrado (máx. ~900 px) con H1, entradilla y botones.
+
+**Cambios en DecorMG:**
+
+- `Hero.tsx`: el hero ocupa toda la pantalla bajo la cabecera fija (`100svh − cabecera`, mínimo 600 px), con el texto centrado, el titular «Reformas que transforman espacios» en blanco y en Anton, y los botones «Pedir presupuesto» (azul hielo) y «Ver nuestros trabajos». El fondo es una foto real con dirección de arte (`getImageProps` + `<picture>`): la cocina renovada en horizontal en ordenador y la cocina abierta en vertical en móvil, precargada como imagen LCP. La etiqueta «Obra real» enlaza con la obra de cada foto.
+- Velo: degradado negro vertical (42 % → 30 % → 50 % → 92 %) más una elipse suave detrás del texto; las fotos siguen viéndose.
+- `HeroVideo.tsx` + `content/hero.ts`: vídeo de fondo `muted loop playsInline` con `preload="none"`, que solo empieza a descargar y reproducir tras la hidratación, no se reproduce con `prefers-reduced-motion` ni con Save-Data, aparece con un fundido cuando ya hay fotogramas, se pausa fuera de pantalla y admite fuentes por media query (un corte vertical más ligero para móvil). La foto sigue debajo como póster.
+- **Sin vídeo todavía:** no hay vídeos en el proyecto y los reels de Instagram necesitan sesión y permiso para descargarlos, así que `hero.video` está vacío y el hero muestra la foto. Para activarlo basta con dejar los archivos en `public/videos` y listarlos en `content/hero.ts` (el comentario indica formatos y tamaños). El componente se probó con un clip temporal generado desde una foto de la web, que no se ha guardado: reproducción automática en ordenador y móvil, pausa fuera de pantalla y sin reproducción con movimiento reducido.
+- GSAP: el titular sube por líneas desde una máscara y después aparecen la entradilla, los botones y la valoración, de forma escalonada. Mientras tanto, el CSS mantiene el texto oculto, con un mecanismo de seguridad que lo muestra a los 2,5 s si GSAP no llega a ejecutarse; con movimiento reducido no se oculta nada. Al hacer scroll, el fondo se asienta y se desplaza, y el texto se aleja.
+- Corregido de paso: las etiquetas oscuras (`.tag--dark`, por ejemplo «Antes») tenían texto negro desde el cambio de paleta.
+
+**Verificación:** typecheck, lint y build sin errores; `scripts/qa.mjs` y `scripts/motion-check.mjs` sin fallos; Lighthouse `/` en ordenador 100/100/100 (LCP 0,7 s, la foto póster) y en móvil 86 (LCP 3,6 s).
