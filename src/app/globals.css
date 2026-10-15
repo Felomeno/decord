@@ -30,7 +30,8 @@
   --ink: #090b0e; /* text on light */
   --ink-muted: #46505b; /* on --pale 8:1 */
   --blue-on-pale: #0b5a91; /* accent text on light, 7:1 */
-  --whatsapp: #157a42; /* white on it 5.4:1 */
+  --whatsapp: #25d366; /* WhatsApp brand green; black text on it 10:1 */
+  --whatsapp-hover: #4be083;
 
   --step-hero: clamp(2.875rem, 1.55rem + 5.2vw, 6.25rem);
   --step-h1: clamp(2.625rem, 1.5rem + 4.4vw, 5.25rem);
@@ -329,7 +330,7 @@ img {
 
 .btn--whatsapp {
   background: var(--whatsapp);
-  color: #fff;
+  color: var(--ink);
 }
 
 .btn--sm {
@@ -364,7 +365,7 @@ img {
     background: #fff;
   }
   .btn--whatsapp:hover {
-    background: #11653a;
+    background: var(--whatsapp-hover);
   }
 }
 
@@ -1693,6 +1694,7 @@ a.pcard:focus-visible {
 .float--wa {
   right: 16px;
   background: var(--whatsapp);
+  color: var(--ink);
 }
 
 .float--tel {
