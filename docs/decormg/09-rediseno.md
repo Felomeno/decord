@@ -85,3 +85,25 @@ Servidor de producción local (`next build && next start`), Microsoft Edge headl
 - Lo mismo que en `08-handoff.md`: autorización de fotos, logo vectorial, datos legales, fotos originales en alta (las de Instagram y Cronoshare son de 480–640 px y se ven algo blandas en tarjetas grandes), canal de formularios.
 - Probar en iPhone y Android reales y en Safari.
 - Confirmar con DecorMG los textos propios: razones de "¿Por qué DecorMG?", los cuatro pasos de "Qué esperar" y las entradillas de servicios.
+
+## 7. Segunda pasada: negro, blanco y azul hielo (15 de octubre de 2026)
+
+A petición del usuario se sustituyen la paleta azul marino y la tipografía futurista. La estructura, las secciones, el contenido y las funciones no cambian; las tablas de los apartados 2 y 5 describen la primera versión.
+
+| Token | Valor | Uso |
+|---|---|---|
+| `--bg` | `#090B0E` | Fondo principal (negro) |
+| `--bg-2` | `#171C22` | Fondo secundario (carbón): franja de confianza, servicios, antes/después, preguntas |
+| `--surface` | `#1F262E` | Tarjetas sobre oscuro |
+| `--offwhite` | `#F8FAFC` | Texto |
+| `--blue` | `#8ECFFF` | Botones, etiquetas, barras de acento, texto de acento pequeño (11:1 sobre negro). Texto negro encima (12:1) |
+| `--blue-hover` | `#B9E5FF` | Hover de botones y enlaces |
+| `--pale` | `#EEF2F6` | Sección clara "Qué esperar", con tarjetas blancas |
+| `--blue-on-pale` | `#0B5A91` | Acento sobre fondo claro (el azul hielo no se lee sobre blanco) |
+| `--text-muted` | `#B3BDC8` | Texto secundario (10:1 sobre negro, 7,6:1 sobre tarjeta) |
+
+**Tipografía:** Anton (titulares H1 y H2 en mayúsculas, cifras, marca y menú móvil) + Manrope (párrafos, H3 en 800, botones, navegación y rótulos). Se probó Anton por ser la más cercana a Impact con un dibujo más limpio; Barlow Condensed ExtraBold queda como alternativa si DecorMG la prefiere más estrecha y menos pesada. Escala: hero 46→100 px, H1 42→84 px, H2 34→66 px. Al ser condensada, el titular del hero ocupa 3 líneas grandes en todas las anchuras y los H2 caben en 1–2.
+
+**Otros ajustes:** botones con texto negro sobre azul hielo, peso 800 y elevación de 2 px al pasar el ratón; botón fantasma con borde más visible y hover azul; rótulos con raya de acento delante; barra de acento más gruesa; cifras de confianza, pasos y tarjetas en Anton más grandes; velo del hero en móvil más denso detrás del titular.
+
+**Verificación:** typecheck, lint y build sin errores; `scripts/qa.mjs` 0 fallos en 15 rutas × 5 anchuras; revisión de capturas a 1440 y 390. Lighthouse: `/` móvil 92 (LCP 3,3 s), escritorio 100; `/contacto` móvil 89 (LCP 3,0 s); accesibilidad y buenas prácticas 100, CLS 0, SEO 69 solo por el `noindex` de la demo. El rendimiento móvil baja unos puntos respecto a la primera versión por la carga de las dos fuentes nuevas.

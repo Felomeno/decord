@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bruno_Ace, Inter } from "next/font/google";
+import { Anton, Manrope } from "next/font/google";
 import { FloatingContact } from "@/components/FloatingContact";
 import { ClickTracking } from "@/components/ClickTracking";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -7,15 +7,15 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/content/site";
 import "./globals.css";
 
-const bruno = Bruno_Ace({
-  variable: "--font-bruno",
+const anton = Anton({
+  variable: "--font-anton",
   weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
   display: "swap",
 });
@@ -42,12 +42,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#080F1B",
+  themeColor: "#090B0E",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${bruno.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="es" className={`${anton.variable} ${manrope.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>

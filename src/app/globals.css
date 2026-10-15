@@ -1,45 +1,48 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
-   DecorMG · dark blue system
-   Dark, high-contrast sections, wide geometric display type (Bruno Ace),
-   Inter for reading, capsule buttons and photo-led cards.
+   DecorMG · black, white and ice blue
+   Black and charcoal sections, heavy condensed display type (Anton),
+   Manrope for reading, buttons and navigation, capsule buttons and
+   photo-led cards.
    ───────────────────────────────────────────────────────────── */
 
 :root {
   /* Brief palette */
-  --bg: #080f1b;
-  --navy: #102a43;
-  --blue: #1769b0; /* white on blue 5.7:1 */
-  --blue-light: #4f97d1; /* on --bg 6.1:1, used for small accent text */
-  --pale: #eaf2f8;
-  --offwhite: #f5f8fc;
+  --bg: #090b0e; /* black */
+  --bg-2: #171c22; /* charcoal */
+  --offwhite: #f8fafc; /* text */
+  --blue: #8ecfff; /* buttons and details; black on it 12:1 */
+  --blue-hover: #b9e5ff; /* hover */
 
   /* Derived */
-  --bg-2: #0c1828; /* alternate dark section */
-  --surface: #12233a; /* cards on dark */
-  --surface-2: #183049;
-  --blue-press: #135a98;
-  --line: rgb(234 242 248 / 0.12);
-  --line-strong: rgb(234 242 248 / 0.28);
+  --navy: #171c22;
+  --blue-light: #8ecfff; /* accent text on dark, 11:1 on --bg */
+  --blue-press: #b9e5ff;
+  --on-blue: #090b0e;
+  --pale: #eef2f6; /* light sections, white cards sit on it */
+  --surface: #1f262e; /* cards on dark */
+  --surface-2: #29323c;
+  --line: rgb(248 250 252 / 0.12);
+  --line-strong: rgb(248 250 252 / 0.3);
   --text: var(--offwhite);
-  --text-muted: #aebfd0; /* on --bg 10:1, on --surface 8:1 */
-  --ink: #0b1a2b; /* text on pale */
-  --ink-muted: #3d5368; /* on --pale 7.4:1 */
-  --blue-on-pale: #135a98; /* 6.3:1 on --pale */
+  --text-muted: #b3bdc8; /* on --bg 10:1, on --surface 7.6:1 */
+  --ink: #090b0e; /* text on light */
+  --ink-muted: #46505b; /* on --pale 8:1 */
+  --blue-on-pale: #0b5a91; /* accent text on light, 7:1 */
   --whatsapp: #157a42; /* white on it 5.4:1 */
 
-  --step-hero: clamp(1.875rem, 1.2rem + 2.6vw, 3.25rem);
-  --step-h1: clamp(1.75rem, 1.15rem + 2.4vw, 3.25rem);
-  --step-h2: clamp(1.5rem, 1.05rem + 1.8vw, 2.625rem);
-  --step-h3: clamp(1.125rem, 1rem + 0.5vw, 1.5rem);
+  --step-hero: clamp(2.875rem, 1.55rem + 5.2vw, 6.25rem);
+  --step-h1: clamp(2.625rem, 1.5rem + 4.4vw, 5.25rem);
+  --step-h2: clamp(2.125rem, 1.35rem + 3.1vw, 4.125rem);
+  --step-h3: clamp(1.1875rem, 1.05rem + 0.5vw, 1.5rem);
   --step-lead: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
   --step-body: 1rem;
   --step-small: 0.875rem;
 
   --margin: clamp(16px, 3.4vw, 48px);
   --gap: clamp(14px, 1.6vw, 24px);
-  --section: clamp(72px, 9vw, 136px);
+  --section: clamp(80px, 9.5vw, 144px);
   --max: 1360px;
   --header-h: 76px;
   --radius: 18px;
@@ -55,8 +58,8 @@
   --color-navy: var(--navy);
   --color-blue: var(--blue);
   --color-pale: var(--pale);
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-display: var(--font-bruno), var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-display: var(--font-anton), Impact, "Arial Narrow", sans-serif;
 }
 
 /* ───────────────────────── Base ───────────────────────── */
@@ -78,12 +81,20 @@ body {
 }
 
 h1,
-h2,
-h3 {
+h2 {
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.12;
-  letter-spacing: 0.005em;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+h3 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
@@ -102,7 +113,7 @@ main:focus {
 
 ::selection {
   background: var(--blue);
-  color: #fff;
+  color: var(--on-blue);
 }
 
 img {
@@ -148,7 +159,7 @@ img {
 
 .h-hero {
   font-size: var(--step-hero);
-  line-height: 1.08;
+  line-height: 0.94;
 }
 
 .h1 {
@@ -160,8 +171,12 @@ img {
 }
 
 .h3 {
+  font-family: var(--font-sans);
   font-size: var(--step-h3);
+  font-weight: 800;
   line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: none;
 }
 
 .lead {
@@ -179,21 +194,37 @@ img {
 }
 
 .kicker {
-  display: block;
-  font-family: var(--font-display);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
-  letter-spacing: 0.22em;
+  font-weight: 800;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--blue-light);
-  margin-bottom: 14px;
+  margin-bottom: 18px;
+}
+
+.kicker::before {
+  content: "";
+  width: 28px;
+  height: 2px;
+  background: currentColor;
+  flex: none;
+}
+
+.center .kicker,
+.sec-head.center .kicker {
+  justify-content: center;
 }
 
 .accent-bar::after {
   content: "";
   display: block;
-  width: 64px;
-  height: 3px;
-  margin-top: 22px;
+  width: 72px;
+  height: 4px;
+  margin-top: 26px;
   background: var(--blue);
   border-radius: 3px;
 }
@@ -257,7 +288,8 @@ img {
   border: 1.5px solid transparent;
   font-family: var(--font-sans);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.01em;
   line-height: 1.2;
   text-align: center;
   cursor: pointer;
@@ -281,11 +313,11 @@ img {
 
 .btn--primary {
   background: var(--blue);
-  color: #fff;
+  color: var(--on-blue);
 }
 
 .btn--ghost {
-  border-color: var(--line-strong);
+  border-color: rgb(248 250 252 / 0.45);
   color: var(--text);
   background: transparent;
 }
@@ -307,21 +339,26 @@ img {
 }
 
 .on-pale .btn--ghost {
-  border-color: rgb(11 26 43 / 0.3);
+  border-color: rgb(9 11 14 / 0.3);
   color: var(--ink);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .btn--primary:hover {
-    background: var(--blue-press);
+    background: var(--blue-hover);
+    transform: translateY(-2px);
+  }
+  .btn--primary:active {
+    transform: scale(0.97);
   }
   .btn--ghost:hover {
-    border-color: var(--offwhite);
-    background: rgb(245 248 252 / 0.06);
+    border-color: var(--blue-hover);
+    color: var(--blue-hover);
+    background: rgb(248 250 252 / 0.06);
   }
   .on-pale .btn--ghost:hover {
     border-color: var(--ink);
-    background: rgb(11 26 43 / 0.05);
+    background: rgb(9 11 14 / 0.05);
   }
   .btn--light:hover {
     background: #fff;
@@ -338,7 +375,7 @@ img {
   padding: 0 12px;
   border-radius: 999px;
   background: var(--blue);
-  color: #fff;
+  color: var(--on-blue);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -346,7 +383,7 @@ img {
 }
 
 .tag--dark {
-  background: rgb(8 15 27 / 0.78);
+  background: rgb(9 11 14 / 0.78);
   border: 1px solid var(--line-strong);
 }
 
@@ -427,7 +464,7 @@ img {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgb(8 15 27 / 0.96);
+  background: rgb(9 11 14 / 0.96);
   border-bottom: 1px solid var(--line);
 }
 
@@ -448,8 +485,9 @@ img {
 
 .brand__name {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.875rem;
   letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .brand__name b {
@@ -479,9 +517,8 @@ img {
   padding: 0 18px;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  letter-spacing: 0.02em;
+  font-size: 0.9375rem;
+  font-weight: 700;
   transition:
     border-color var(--t-hover) ease,
     background-color var(--t-hover) ease;
@@ -489,7 +526,7 @@ img {
 
 .nav a[aria-current="page"] {
   border-color: var(--blue-light);
-  background: rgb(79 151 209 / 0.12);
+  background: rgb(142 207 255 / 0.12);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -586,7 +623,7 @@ img {
 }
 
 .menu::backdrop {
-  background: rgb(8 15 27 / 0.6);
+  background: rgb(9 11 14 / 0.6);
 }
 
 .menu__top {
@@ -609,7 +646,9 @@ img {
   min-height: 64px;
   border-bottom: 1px solid var(--line);
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 
 .menu nav a[aria-current="page"] {
@@ -684,7 +723,7 @@ img {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgb(8 15 27 / 0) 24%, rgb(8 15 27 / 0.8) 50%, var(--bg) 92%);
+  background: linear-gradient(to bottom, rgb(9 11 14 / 0) 12%, rgb(9 11 14 / 0.72) 34%, rgb(9 11 14 / 0.9) 52%, var(--bg) 90%);
 }
 
 .hero__inner {
@@ -706,7 +745,7 @@ img {
 .hero__text {
   margin-top: 18px;
   max-width: 46ch;
-  color: #dce6ef;
+  color: #e2e8ef;
 }
 
 .hero__ctas {
@@ -720,7 +759,7 @@ img {
   gap: 8px 18px;
   margin-top: 26px;
   font-size: var(--step-small);
-  color: #dce6ef;
+  color: #e2e8ef;
 }
 
 .hero__proof a {
@@ -764,7 +803,7 @@ img {
     width: 50%;
   }
   .hero__media::after {
-    background: linear-gradient(to right, var(--bg) 0, rgb(8 15 27 / 0) 22%);
+    background: linear-gradient(to right, var(--bg) 0, rgb(9 11 14 / 0) 22%);
   }
   .hero__inner {
     justify-content: center;
@@ -822,8 +861,9 @@ img {
 
 .trust__value {
   font-family: var(--font-display);
-  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
-  line-height: 1.2;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
 }
 
 .trust__value svg {
@@ -897,7 +937,7 @@ img {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(to top, rgb(8 15 27 / 0.92) 0, rgb(8 15 27 / 0.7) 32%, rgb(8 15 27 / 0) 62%);
+  background: linear-gradient(to top, rgb(9 11 14 / 0.92) 0, rgb(9 11 14 / 0.7) 32%, rgb(9 11 14 / 0) 62%);
 }
 
 .pcard .tag {
@@ -912,7 +952,7 @@ img {
 .pcard p {
   margin-top: 10px;
   max-width: 48ch;
-  color: #dce6ef;
+  color: #e2e8ef;
 }
 
 .pcard .arrow-link {
@@ -1150,7 +1190,7 @@ a.pcard:focus-visible {
 .ba__tab[aria-selected="true"] {
   background: var(--blue);
   border-color: var(--blue);
-  color: #fff;
+  color: var(--on-blue);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1240,7 +1280,7 @@ a.pcard:focus-visible {
   height: 18px;
   border-radius: 999px;
   background: var(--blue)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E")
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23090b0e' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E")
     center / 12px no-repeat;
 }
 
@@ -1280,7 +1320,7 @@ a.pcard:focus-visible {
   border-radius: var(--radius);
   background: #fff;
   overflow: hidden;
-  box-shadow: 0 1px 0 rgb(11 26 43 / 0.06);
+  border: 1px solid rgb(9 11 14 / 0.08);
 }
 
 .step .frame {
@@ -1294,9 +1334,9 @@ a.pcard:focus-visible {
 .step__num {
   display: block;
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 3rem;
   line-height: 1;
-  color: var(--blue);
+  color: var(--blue-on-pale);
   margin-bottom: 14px;
 }
 
@@ -1434,7 +1474,7 @@ a.pcard:focus-visible {
   height: 32px;
   border-radius: 999px;
   background: var(--blue);
-  color: #fff;
+  color: var(--on-blue);
   font-size: 1.25rem;
   font-weight: 500;
   transition: transform var(--t-hover) var(--ease-out);
@@ -1478,7 +1518,7 @@ a.pcard:focus-visible {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(8 15 27 / 0.72);
+  background: rgb(9 11 14 / 0.72);
 }
 
 .cta-final h2 {
@@ -1489,7 +1529,7 @@ a.pcard:focus-visible {
 .cta-final p {
   margin: 22px auto 0;
   max-width: 52ch;
-  color: #dce6ef;
+  color: #e2e8ef;
 }
 
 .cta-final .btn-row {
@@ -1500,7 +1540,7 @@ a.pcard:focus-visible {
 .cta-final__phone {
   margin-top: 26px;
   font-size: var(--step-small);
-  color: #dce6ef;
+  color: #e2e8ef;
 }
 
 .cta-final__phone a {
@@ -1658,6 +1698,7 @@ a.pcard:focus-visible {
 .float--tel {
   left: 16px;
   background: var(--blue);
+  color: var(--on-blue);
 }
 
 @media (min-width: 1100px) {
@@ -1703,7 +1744,7 @@ a.pcard:focus-visible {
 .phead__lead {
   margin-top: 20px;
   max-width: 58ch;
-  color: #dce6ef;
+  color: #e2e8ef;
 }
 
 .phead__photo .frame {
@@ -1806,8 +1847,8 @@ a.pcard:focus-visible {
 }
 
 .sec--pale .facts {
-  background: rgb(11 26 43 / 0.1);
-  border-color: rgb(11 26 43 / 0.1);
+  background: rgb(9 11 14 / 0.1);
+  border-color: rgb(9 11 14 / 0.1);
 }
 
 .sec--pale .facts > div {
@@ -1863,13 +1904,14 @@ a.pcard:focus-visible {
 .card__num {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 2.5rem;
+  line-height: 1;
   color: var(--blue-light);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .sec--pale .card__num {
-  color: var(--blue);
+  color: var(--blue-on-pale);
 }
 
 .media-43 {
@@ -2000,7 +2042,7 @@ a.pcard:focus-visible {
   height: 30px;
   border-radius: 999px;
   background: var(--blue);
-  color: #fff;
+  color: var(--on-blue);
   font-family: var(--font-display);
   font-size: 0.875rem;
 }
@@ -2063,7 +2105,7 @@ a.pcard:focus-visible {
 .field textarea:focus {
   outline: none;
   border-color: var(--blue-light);
-  box-shadow: 0 0 0 3px rgb(79 151 209 / 0.3);
+  box-shadow: 0 0 0 3px rgb(142 207 255 / 0.3);
 }
 
 .field[data-invalid="true"] input,
@@ -2184,7 +2226,7 @@ a.pcard:focus-visible {
   border-radius: 999px;
   border: 0;
   background: var(--blue);
-  color: #fff;
+  color: var(--on-blue);
   font: inherit;
   font-weight: 700;
   cursor: pointer;
