@@ -15,7 +15,6 @@ export type HeroSlide = {
  * The first slide is the LCP image and the only one shown with reduced motion.
  */
 export const heroSlides: HeroSlide[] = [
-  { photo: photos.cocinaAbierta, desktop: photos.cocinaDespues, label: "Cocina renovada" },
   { photo: photos.banoMarmol, label: "Baño en blanco veteado y madera" },
   { photo: photos.salon1, label: "Salón con papel pintado" },
   { photo: photos.banoLaton, label: "Baño con espejo dorado y roble" },
