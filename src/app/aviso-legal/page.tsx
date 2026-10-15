@@ -16,7 +16,7 @@ export default function LegalNoticePage() {
         crumbs={[{ name: "Aviso legal", path: "/aviso-legal" }]}
         lead={<p>Plantilla para revisión del responsable del sitio. Los datos marcados como pendientes debe aportarlos DecorMG.</p>}
       />
-      <section className="bg-paper" style={{ paddingBottom: "var(--section)" }}>
+      <section className="sec" style={{ paddingTop: 56 }}>
         <div className="wrap">
           <div className="legal">
             <h2>Estado de esta web</h2>

@@ -1,21 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Newsreader } from "next/font/google";
-import { ActionBar } from "@/components/ActionBar";
+import { Bruno_Ace, Inter } from "next/font/google";
+import { FloatingContact } from "@/components/FloatingContact";
 import { ClickTracking } from "@/components/ClickTracking";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { site } from "@/content/site";
 import "./globals.css";
 
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
+const bruno = Bruno_Ace({
+  variable: "--font-bruno",
+  weight: "400",
   subsets: ["latin"],
-  axes: ["opsz"],
   display: "swap",
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -42,12 +42,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#102A43",
+  themeColor: "#080F1B",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${newsreader.variable} ${manrope.variable}`} suppressHydrationWarning>
+    <html lang="es" className={`${bruno.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
@@ -65,7 +65,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
-        <ActionBar />
+        <FloatingContact />
         <ClickTracking />
       </body>
     </html>

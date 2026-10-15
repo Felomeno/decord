@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { ContactSheet } from "@/components/ContactSheet";
-import { ContactBand } from "@/components/home/ContactBand";
+import { FinalCta } from "@/components/home/FinalCta";
 import { PageHead } from "@/components/PageHead";
+import { ProjectGrid } from "@/components/ProjectCard";
 import { photos } from "@/content/images";
 import { kindLabel, kindOrder, projects } from "@/content/projects";
 
@@ -20,9 +20,9 @@ export default function ProjectsPage() {
   return (
     <>
       <PageHead
-        title="Obras"
-        large
-        photo={photos.cocinaAbierta}
+        title="Nuestros trabajos"
+        kicker="Obras reales"
+        photo={photos.banoMarmol}
         crumbs={[{ name: "Obras", path: "/proyectos" }]}
         lead={
           <p>
@@ -31,17 +31,28 @@ export default function ProjectsPage() {
           </p>
         }
       />
-      {groups.map((group) => (
-        <section key={group.kind} className="bg-paper" aria-labelledby={`grupo-${group.kind}`} style={{ paddingBottom: 96 }}>
+      {groups.map((group, i) => (
+        <section
+          key={group.kind}
+          className={`sec${i % 2 === 1 ? " sec--alt" : ""}`}
+          aria-labelledby={`grupo-${group.kind}`}
+        >
           <div className="wrap">
-            <h2 id={`grupo-${group.kind}`} className="t-h2">
-              {kindLabel[group.kind]}
-            </h2>
+            <div className="sec-head" data-reveal>
+              <div className="sec-head__text">
+                <p className="kicker">
+                  {group.items.length} {group.items.length === 1 ? "obra" : "obras"}
+                </p>
+                <h2 id={`grupo-${group.kind}`} className="h2 accent-bar">
+                  {kindLabel[group.kind]}
+                </h2>
+              </div>
+            </div>
+            <ProjectGrid projects={group.items} />
           </div>
-          <ContactSheet projects={group.items} />
         </section>
       ))}
-      <ContactBand title="¿Tienes una obra parecida?" />
+      <FinalCta title="¿Tienes una obra parecida?" />
     </>
   );
 }

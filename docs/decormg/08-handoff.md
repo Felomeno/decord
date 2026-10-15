@@ -1,5 +1,7 @@
 # 08 · Traspaso
 
+> Actualización 15 de octubre de 2026: rediseño visual oscuro en la rama `feat/redesign-dark`; ver `09-rediseno.md`. Datos, fuentes y bloqueos de este documento siguen vigentes.
+
 Estado a 15 de octubre de 2026: **demo completa y funcional en local**, lista para revisión comercial con DecorMG. No está desplegada ni publicada. Rama `feat/demo-web` con commits por hito; no se ha hecho push.
 
 ## 1. Qué se hizo

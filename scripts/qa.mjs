@@ -71,9 +71,9 @@ for (const route of ROUTES) {
 
     const checks = await page.evaluate(() => {
       const vw = document.documentElement.clientWidth;
-      const scrollers = ".scroller, .run__frames, .showcase__run, .marquee, .shelf, .team-strip";
+      const scrollers = ".scroller, .ba__tabs, .team-strip";
       const overflow = [...document.querySelectorAll("body *")]
-        .filter((el) => !el.closest(scrollers) && !el.closest(".contact-band > div:first-child"))
+        .filter((el) => !el.closest(scrollers))
         .filter((el) => {
           const r = el.getBoundingClientRect();
           return r.width > 0 && r.right > vw + 1;
@@ -89,7 +89,7 @@ for (const route of ROUTES) {
       const inputsNoLabel = [...document.querySelectorAll("input, select, textarea")].filter(
         (el) => el.type !== "hidden" && !(el.labels?.length || el.getAttribute("aria-label")),
       ).length;
-      const smallTargets = [...document.querySelectorAll("button, .btn, .action-bar a, .icon-btn")]
+      const smallTargets = [...document.querySelectorAll("button, .btn, .float, .icon-btn")]
         .filter((el) => {
           const r = el.getBoundingClientRect();
           return r.width > 0 && (r.height < 44 || r.width < 44);
@@ -101,9 +101,10 @@ for (const route of ROUTES) {
           const range = document.createRange();
           range.selectNodeContents(h);
           const tops = new Set([...range.getClientRects()].filter((r) => r.width > 1).map((r) => Math.round(r.top)));
-          return { text: h.textContent.trim().slice(0, 40), lines: tops.size };
+          // Wide display face: page titles (h1) may take three lines on narrow screens.
+          return { text: h.textContent.trim().slice(0, 40), lines: tops.size, max: h.tagName === "H1" ? 3 : 2 };
         })
-        .filter((h) => h.lines > 2);
+        .filter((h) => h.lines > h.max);
       const robots = document.querySelector('meta[name="robots"]')?.getAttribute("content");
       return { overflow, imgsNoAlt, brokenImgs, unnamed, h1, inputsNoLabel, smallTargets, headlines, robots };
     });
@@ -115,7 +116,7 @@ for (const route of ROUTES) {
     if (checks.h1 !== 1) fail(route, width, `${checks.h1} h1 elements`);
     if (checks.inputsNoLabel) fail(route, width, `${checks.inputsNoLabel} form fields without label`);
     if (checks.smallTargets) note(route, width, `${checks.smallTargets} controls under 44px`);
-    for (const h of checks.headlines) fail(route, width, `headline over 2 lines (${h.lines}): ${h.text}`);
+    for (const h of checks.headlines) fail(route, width, `headline over ${h.max} lines (${h.lines}): ${h.text}`);
     if (!checks.robots?.includes("noindex")) fail(route, width, "missing noindex on demo");
     for (const e of errors) {
       if (route === "/no-existe" && /404/.test(e)) continue; // the expected 404 response itself

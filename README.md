@@ -3,7 +3,7 @@
 Propuesta de web para **DecorMG Reformas Integrales** (Madrid), construida con fotos y datos públicos de la empresa. **Es una demo pendiente de aprobación**: se sirve con `noindex`, muestra un aviso visible y no debe presentarse como la web oficial hasta que DecorMG la apruebe.
 
 Documentación completa del proyecto en [`docs/decormg/`](docs/decormg/):
-investigación de fuentes, inventario de contenido, manifiesto de fotos, UX, sistema de diseño, especificaciones de página, informe de QA y traspaso.
+investigación de fuentes, inventario de contenido, manifiesto de fotos, UX, sistema de diseño, especificaciones de página, informe de QA y traspaso. El diseño actual (oscuro, azul, Bruno Ace + Inter, inspirado en el lenguaje visual de classiccarssaar.de) está descrito en [`09-rediseno.md`](docs/decormg/09-rediseno.md), que sustituye a la dirección visual de los documentos 05 y 06.
 
 ## Requisitos
 
@@ -20,7 +20,7 @@ npm install
 npm run dev
 ```
 
-Abre http://localhost:3000. La ruta interna `/preview/hero` muestra las tres composiciones de hero que se evaluaron.
+Abre http://localhost:3000.
 
 Producción local:
 
@@ -50,13 +50,14 @@ npm start
 src/
   app/                 Rutas (App Router): /, /proyectos, /proyectos/[slug], /servicios,
                        /servicios/[slug], /nosotros, /contacto, legales, robots, sitemap
-  components/          Cabecera, pie, hoja de obras, constructor de mensaje, Frame (fotos)
-    home/              Secciones de la portada
+  components/          Cabecera, pie, PageHead, ProjectCard, SectionHead, constructor de mensaje,
+                       botones flotantes, Frame (fotos)
+    home/              Secciones de la portada (también reutilizadas en interiores: Process, Reviews, Faq, FinalCta)
   content/             TODO el contenido editable, tipado
     site.ts            Nombre, teléfono, WhatsApp, dirección, enlaces, valoración de Google
     projects.ts        Obras: título, barrio, trabajos, fotos, fuente
     services.ts        Servicios, qué incluye, preguntas
-    voice.ts           Opiniones (extractos literales), FAQ, fases de obra
+    voice.ts           Opiniones (extractos literales), FAQ, pasos y fases de obra
     images.ts          Cada foto con dimensiones, alt, fuente y punto focal
   lib/                 Mensaje de WhatsApp, validación, tracking
 assets-source/         Fotos originales tal como se obtuvieron (no se publican)
@@ -70,6 +71,7 @@ docs/decormg/          Documentación del proyecto
 - **Datos de contacto:** `src/content/site.ts`.
 - **Añadir una obra:** copia las fotos a `assets-source/`, añádelas al mapa de `scripts/prepare-images.mjs`, ejecuta `npm run images`, registra cada foto en `src/content/images.ts` (dimensiones y `alt`) y añade la obra en `src/content/projects.ts`. Si DecorMG publicó la lista de trabajos, va en `works`; si no, describe solo lo que se ve en `visible`. La página `/proyectos/<slug>` se genera sola.
 - **Servicios y preguntas:** `src/content/services.ts` y `src/content/voice.ts`.
+- **Colores y tipografía:** tokens al principio de `src/app/globals.css`; fuentes en `src/app/layout.tsx`.
 - Regla: no se publican cifras, plazos, precios, garantías ni opiniones que no estén en una fuente verificable (ver `docs/decormg/02-content-inventory.md`).
 
 ## Variables de entorno

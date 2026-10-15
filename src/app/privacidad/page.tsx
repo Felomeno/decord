@@ -15,7 +15,7 @@ export default function PrivacyPage() {
         crumbs={[{ name: "Privacidad", path: "/privacidad" }]}
         lead={<p>Plantilla basada en cómo funciona esta web hoy. Debe revisarla el responsable del tratamiento antes de publicar.</p>}
       />
-      <section className="bg-paper" style={{ paddingBottom: "var(--section)" }}>
+      <section className="sec" style={{ paddingTop: 56 }}>
         <div className="wrap">
           <div className="legal">
             <h2>Qué datos recoge esta web</h2>

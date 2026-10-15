@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ContactSheet } from "@/components/ContactSheet";
-import { ContactBand } from "@/components/home/ContactBand";
+import { Frame } from "@/components/Frame";
+import { FinalCta } from "@/components/home/FinalCta";
+import { ArrowRightIcon } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
+import { ProjectGrid } from "@/components/ProjectCard";
 import { photos } from "@/content/images";
 import { projects } from "@/content/projects";
 import { otherWorks, services } from "@/content/services";
@@ -18,11 +20,16 @@ export default function ServicesPage() {
   return (
     <>
       <PageHead
-        title="Servicios"
-        large
+        title="Qué reformamos"
+        kicker="Servicios"
         photo={photos.banoLaton}
         crumbs={[{ name: "Servicios", path: "/servicios" }]}
-        lead={<p>Reformas completas y trabajos sueltos en la Comunidad de Madrid. Sin precios cerrados: cada obra se presupuesta con sus datos.</p>}
+        lead={
+          <p>
+            Reformas completas y trabajos sueltos en la Comunidad de Madrid. Sin precios cerrados: cada obra se
+            presupuesta con sus datos.
+          </p>
+        }
       />
 
       {services.map((service, i) => {
@@ -30,69 +37,87 @@ export default function ServicesPage() {
         return (
           <section
             key={service.slug}
-            className={i % 2 === 0 ? "bg-ice" : "bg-paper"}
+            className={`sec${i % 2 === 0 ? " sec--alt" : ""}`}
             aria-labelledby={`srv-${service.slug}`}
-            style={{ paddingBlock: 96 }}
           >
-            <div className="wrap grid-12 head-row" data-reveal>
-              <h2 id={`srv-${service.slug}`} className="t-h2 head-row__title">
-                <Link href={`/servicios/${service.slug}`} className="plain-link">
-                  {service.name}
-                </Link>
-              </h2>
-              <div className="head-row__note">
-                <p>{service.intro}</p>
-                <p style={{ marginTop: 16 }}>
-                  <Link href={`/servicios/${service.slug}`} className="prose-link">
-                    Qué incluye, obras y preguntas
-                  </Link>
-                </p>
+            <div className="wrap">
+              <div className="split" style={{ alignItems: "center", marginBottom: related.length ? 48 : 0 }} data-reveal>
+                <Frame photo={service.photo} fill sizes="(max-width: 899px) 100vw, 40vw" className="media-43" decorative />
+                <div>
+                  <p className="kicker">{service.short}</p>
+                  <h2 id={`srv-${service.slug}`} className="h2 accent-bar">
+                    {service.name}
+                  </h2>
+                  <p style={{ marginTop: 22, maxWidth: "60ch" }}>{service.intro}</p>
+                  <ul className="works works--cols">
+                    {service.includes.map((item) => (
+                      <li key={item.title}>{item.title}</li>
+                    ))}
+                  </ul>
+                  <div className="btn-row" style={{ marginTop: 28 }}>
+                    <Link href={`/servicios/${service.slug}`} className="btn btn--primary btn--sm">
+                      Ver {service.name.toLowerCase()} <ArrowRightIcon />
+                    </Link>
+                  </div>
+                </div>
               </div>
+              {related.length ? <ProjectGrid projects={related} /> : null}
             </div>
-            {related.length ? <ContactSheet projects={related} /> : null}
           </section>
         );
       })}
 
-      <section className="section bg-paper" aria-labelledby="otros-trabajos-title" id="otros-trabajos">
-        <div className="wrap grid-12" data-reveal>
-          <h2 id="otros-trabajos-title" className="t-h2 essentials__title">
-            Otros trabajos
-          </h2>
-          <div className="essentials__cols">
-            <ul>
-              <li>También hacemos</li>
-              {otherWorks.map((work) => (
-                <li key={work}>{work}</li>
-              ))}
-            </ul>
-            <ul>
-              <li>Obras publicadas</li>
-              <li>
-                <Link href="/proyectos/filtraciones-villaverde" className="prose-link">
-                  Filtraciones y poyetes, Villaverde
-                </Link>
-              </li>
-              <li>
-                <Link href="/proyectos/ducha-lucero" className="prose-link">
-                  Plato de ducha, Lucero
-                </Link>
-              </li>
-              <li>
-                <Link href="/proyectos/local-techo-led" className="prose-link">
-                  Local con techo de luz
-                </Link>
-              </li>
-            </ul>
-            <ul>
-              <li>Lo que no publicamos</li>
-              <li>Precios cerrados ni plazos fijos: dependen de cada obra y se dan en el presupuesto.</li>
-            </ul>
+      <section className="sec sec--pale on-pale" aria-labelledby="otros-trabajos-title" id="otros-trabajos">
+        <div className="wrap">
+          <div className="sec-head" data-reveal>
+            <div className="sec-head__text">
+              <p className="kicker">Trabajos sueltos</p>
+              <h2 id="otros-trabajos-title" className="h2 accent-bar">
+                Otros trabajos
+              </h2>
+              <p className="muted">
+                También como trabajo independiente, sin reformar toda la vivienda. No publicamos precios cerrados ni
+                plazos fijos: dependen de cada obra y se dan en el presupuesto.
+              </p>
+            </div>
+          </div>
+          <div className="cards cards--3" data-reveal>
+            <div className="card">
+              <h3>También hacemos</h3>
+              <ul className="works">
+                {otherWorks.map((work) => (
+                  <li key={work}>{work}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="card">
+              <h3>Obras publicadas</h3>
+              <ul className="works">
+                <li>
+                  <Link href="/proyectos/filtraciones-villaverde" className="link">
+                    Filtraciones y poyetes, Villaverde
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/proyectos/ducha-lucero" className="link">
+                    Plato de ducha, Lucero
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/proyectos/local-techo-led" className="link">
+                    Local con techo de luz
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+              <Frame photo={photos.localLed} fill sizes="(max-width: 1023px) 100vw, 33vw" className="card-photo" />
+            </div>
           </div>
         </div>
       </section>
 
-      <ContactBand />
+      <FinalCta />
     </>
   );
 }

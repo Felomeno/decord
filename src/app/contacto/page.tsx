@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Frame } from "@/components/Frame";
 import { PhoneIcon, WhatsAppIcon } from "@/components/icons";
-import { photos } from "@/content/images";
 import { BusinessJsonLd } from "@/components/JsonLd";
 import { MessageBuilder } from "@/components/MessageBuilder";
 import { PageHead } from "@/components/PageHead";
+import { photos } from "@/content/images";
 import { site } from "@/content/site";
 import { telUrl, whatsappUrl } from "@/lib/contact";
 
@@ -22,56 +22,61 @@ export default function ContactPage() {
       <BusinessJsonLd />
       <PageHead
         title="Pide presupuesto"
-        large
+        kicker="Contacto"
+        photo={photos.salon2}
+        photoDesktopOnly
         crumbs={[{ name: "Contacto", path: "/contacto" }]}
         lead={<p>Rellena lo básico y se abre WhatsApp con tu mensaje escrito. Si prefieres, llama directamente.</p>}
+        actions={
+          <>
+            <a href={telUrl} className="btn btn--ghost" data-track="cta_phone" data-track-place="contact-head">
+              <PhoneIcon /> {site.phoneDisplay}
+            </a>
+            <a
+              href={whatsappUrl()}
+              className="btn btn--whatsapp"
+              target="_blank"
+              rel="noopener"
+              data-track="cta_whatsapp"
+              data-track-place="contact-head"
+            >
+              <WhatsAppIcon /> WhatsApp sin formulario
+            </a>
+          </>
+        }
       />
 
-      <section className="bg-paper" aria-label="Formulario de presupuesto" style={{ paddingBottom: "var(--section)" }}>
-        <div className="wrap grid-12" style={{ rowGap: 64 }}>
-          <div className="contact-form-col">
+      <section className="sec" aria-label="Formulario de presupuesto" style={{ paddingTop: 56 }}>
+        <div className="wrap contact-grid">
+          <div className="panel">
+            <h2 className="h3" style={{ marginBottom: 24 }}>
+              Cuéntanos tu obra
+            </h2>
             <MessageBuilder variant="full" />
           </div>
 
-          <aside className="contact-aside" aria-labelledby="despues-title">
-            <figure style={{ margin: "0 0 16px" }}>
-              <Frame photo={photos.equipo} height={320} sizes="180px" />
-              <figcaption className="t-small t-muted" style={{ marginTop: 8 }}>
-                Equipo de DecorMG en obra (foto de su Instagram).
-              </figcaption>
-            </figure>
-            <h2 id="despues-title" className="t-lead" style={{ fontFamily: "var(--font-serif)", fontWeight: 500 }}>
-              Qué pasa después
-            </h2>
-            <ol className="steps">
-              <li>Se abre WhatsApp con tu mensaje. Lo revisas y lo envías tú.</li>
-              <li>DecorMG te contesta por ese chat o te llama, según hayas elegido.</li>
-              <li>Con los datos de tu obra te preparan un presupuesto sin compromiso.</li>
-            </ol>
-            <p className="t-muted">
-              Esta web no guarda lo que escribes: el mensaje viaja solo por tu WhatsApp. No te pedimos la dirección
-              completa en este primer contacto.
-            </p>
-
-            <h2 className="t-lead" style={{ fontFamily: "var(--font-serif)", fontWeight: 500, marginTop: 40 }}>
-              Otras formas
-            </h2>
-            <div style={{ display: "grid", gap: 12, marginTop: 16 }}>
-              <a href={telUrl} className="btn btn-secondary" data-track="cta_phone" data-track-place="contact-page">
-                <PhoneIcon /> Llamar al {site.phoneDisplay}
-              </a>
-              <a
-                href={whatsappUrl()}
-                className="btn btn-secondary"
-                target="_blank"
-                rel="noopener"
-                data-track="cta_whatsapp"
-                data-track-place="contact-page"
-              >
-                <WhatsAppIcon /> WhatsApp sin formulario
-              </a>
+          <aside aria-labelledby="despues-title" style={{ display: "grid", gap: 24, alignContent: "start" }}>
+            <div className="panel">
+              <h2 id="despues-title" className="h3">
+                Qué pasa después
+              </h2>
+              <ol className="steps-list">
+                <li>Se abre WhatsApp con tu mensaje. Lo revisas y lo envías tú.</li>
+                <li>DecorMG te contesta por ese chat o te llama, según hayas elegido.</li>
+                <li>Con los datos de tu obra te preparan un presupuesto sin compromiso.</li>
+              </ol>
+              <p className="small muted" style={{ marginTop: 20 }}>
+                Esta web no guarda lo que escribes: el mensaje viaja solo por tu WhatsApp. No te pedimos la dirección
+                completa en este primer contacto.
+              </p>
             </div>
-            <dl className="facts" style={{ marginTop: 32, gridTemplateColumns: "1fr" }}>
+
+            <figure style={{ margin: 0, display: "grid", gridTemplateColumns: "120px 1fr", gap: 16, alignItems: "end" }}>
+              <Frame photo={photos.equipo} height={213} sizes="120px" className="media-round" />
+              <figcaption className="small muted">Equipo de DecorMG en obra (foto de su Instagram).</figcaption>
+            </figure>
+
+            <dl className="facts">
               <div>
                 <dt>Dirección de la ficha de Google</dt>
                 <dd>
@@ -85,7 +90,7 @@ export default function ContactPage() {
               <div>
                 <dt>Instagram</dt>
                 <dd>
-                  <a href={site.links.instagram} className="prose-link" target="_blank" rel="noopener">
+                  <a href={site.links.instagram} className="link" target="_blank" rel="noopener">
                     {site.links.instagramHandle}
                   </a>
                 </dd>

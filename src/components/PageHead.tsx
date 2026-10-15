@@ -8,29 +8,30 @@ type Crumb = { name: string; path: string };
 
 type Props = {
   title: string;
+  kicker?: string;
   lead?: ReactNode;
   crumbs: Crumb[];
-  /** Real job photo that carries the first screen. */
+  /** Real job photo shown beside the title. */
   photo?: Photo;
-  /** Short titles (one or two words) are set at display size. */
-  large?: boolean;
+  actions?: ReactNode;
+  /** Hide the photo on phones, where the task (a form) should come first. */
+  photoDesktopOnly?: boolean;
 };
 
-export function PageHead({ title, lead, crumbs, photo, large }: Props) {
+export function PageHead({ title, kicker, lead, crumbs, photo, actions, photoDesktopOnly }: Props) {
   const trail = [{ name: "Inicio", path: "/" }, ...crumbs];
+  const natural = photo ? photo.width < 1000 : false;
   return (
-    <header className={`page-head bg-paper${photo ? " page-head--photo" : ""}`}>
+    <header className="phead">
       <BreadcrumbJsonLd items={trail} />
-      <div className="wrap grid-12 page-head__grid">
-        <div className="page-head__text" data-reveal>
+      <div className="wrap phead__grid">
+        <div className="phead__text">
           <nav className="crumbs" aria-label="Migas de pan">
             <ol>
               {trail.map((crumb, i) => (
                 <li key={crumb.path}>
                   {i < trail.length - 1 ? (
-                    <Link href={crumb.path} className="plain-link">
-                      {crumb.name}
-                    </Link>
+                    <Link href={crumb.path}>{crumb.name}</Link>
                   ) : (
                     <span aria-current="page">{crumb.name}</span>
                   )}
@@ -38,19 +39,23 @@ export function PageHead({ title, lead, crumbs, photo, large }: Props) {
               ))}
             </ol>
           </nav>
-          <h1 className={large ? "t-display" : "t-h2"}>{title}</h1>
-          {lead ? <div className="t-lead page-head__lead">{lead}</div> : null}
+          {kicker ? <p className="kicker">{kicker}</p> : null}
+          <h1 className="h1 accent-bar">{title}</h1>
+          {lead ? <div className="lead phead__lead">{lead}</div> : null}
+          {actions ? (
+            <div className="btn-row" style={{ marginTop: 28 }}>
+              {actions}
+            </div>
+          ) : null}
         </div>
         {photo ? (
-          photo.width >= 1000 ? (
-            <div className="page-head__photo">
-              <Frame photo={photo} fill sizes="(max-width: 1023px) 100vw, 50vw" priority />
-            </div>
-          ) : (
-            <div className="page-head__photo page-head__photo--natural">
-              <Frame photo={photo} height={640} sizes={`${photo.width}px`} priority />
-            </div>
-          )
+          <div className={`phead__photo${natural ? " phead__photo--natural" : ""}${photoDesktopOnly ? " phead__photo--desk" : ""}`}>
+            {natural ? (
+              <Frame photo={photo} height={480} sizes="360px" priority />
+            ) : (
+              <Frame photo={photo} fill sizes="(max-width: 899px) 100vw, 45vw" priority />
+            )}
+          </div>
         ) : null}
       </div>
     </header>

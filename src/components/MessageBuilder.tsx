@@ -145,7 +145,7 @@ export function MessageBuilder({ variant, defaultType = "", project }: Props) {
           <p>No hace falta tu dirección completa.</p>
           <p>
             Se abre WhatsApp con el mensaje escrito; lo envías tú.{" "}
-            <Link href="/privacidad" className="prose-link">
+            <Link href="/privacidad" className="link">
               Privacidad
             </Link>
           </p>
@@ -154,17 +154,17 @@ export function MessageBuilder({ variant, defaultType = "", project }: Props) {
           <p className="builder__preview-label">Tu mensaje</p>
           {message}
         </div>
-        <p role="status" className="t-small" style={{ marginTop: 12, minHeight: "1.5em" }}>
+        <p role="status" className="small" style={{ marginTop: 12, minHeight: "1.5em" }}>
           {statusText}{" "}
           {status.kind === "opened" ? (
-            <a href={status.url} className="prose-link" target="_blank" rel="noopener">
+            <a href={status.url} className="link" target="_blank" rel="noopener">
               Abrir de nuevo
             </a>
           ) : null}
         </p>
         <noscript>
           <p>
-            <a href={whatsappUrl()} className="prose-link">
+            <a href={whatsappUrl()} className="link">
               Escribir por WhatsApp
             </a>{" "}
             o llamar al <a href={telUrl}>{site.phoneDisplay}</a>.
@@ -277,7 +277,7 @@ export function MessageBuilder({ variant, defaultType = "", project }: Props) {
           />
           <span>
             He leído la{" "}
-            <Link href="/privacidad" className="prose-link">
+            <Link href="/privacidad" className="link">
               información de privacidad
             </Link>
             . Mis datos solo viajan en el mensaje que yo envío por WhatsApp; esta web no los guarda.
@@ -287,7 +287,7 @@ export function MessageBuilder({ variant, defaultType = "", project }: Props) {
       </div>
 
       <div>
-        <p className="t-small t-muted" style={{ marginBottom: 8 }}>
+        <p className="small muted" style={{ marginBottom: 8 }}>
           Vista previa del mensaje
         </p>
         <div className="message-preview" aria-live="polite">
@@ -296,18 +296,18 @@ export function MessageBuilder({ variant, defaultType = "", project }: Props) {
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn--primary">
           <WhatsAppIcon /> Abrir WhatsApp con este mensaje
         </button>
-        <button type="button" className="btn btn-secondary" onClick={copy}>
+        <button type="button" className="btn btn--ghost" onClick={copy}>
           Copiar mensaje
         </button>
       </div>
 
-      <p role="status" className="t-small" style={{ minHeight: "1.5em" }}>
+      <p role="status" className="small" style={{ minHeight: "1.5em" }}>
         {statusText}{" "}
         {status.kind === "opened" ? (
-          <a href={status.url} className="prose-link" target="_blank" rel="noopener">
+          <a href={status.url} className="link" target="_blank" rel="noopener">
             Abrir de nuevo
           </a>
         ) : null}
@@ -316,7 +316,7 @@ export function MessageBuilder({ variant, defaultType = "", project }: Props) {
       <noscript>
         <p>
           Sin JavaScript no se puede componer el mensaje.{" "}
-          <a href={whatsappUrl()} className="prose-link">
+          <a href={whatsappUrl()} className="link">
             Escribe directamente por WhatsApp
           </a>{" "}
           o llama al <a href={telUrl}>{site.phoneDisplay}</a>.

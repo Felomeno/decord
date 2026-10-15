@@ -65,6 +65,30 @@ export const faq = [
   },
 ];
 
+// What a customer can expect, in four steps, using only what DecorMG states or its reviews say.
+export const steps: { title: string; text: string; photo: Photo }[] = [
+  {
+    title: "Nos cuentas tu idea",
+    text: "Por WhatsApp o por teléfono: qué quieres reformar y en qué barrio. Si quieres, mandas fotos del estado actual.",
+    photo: photos.equipo,
+  },
+  {
+    title: "Presupuesto sin compromiso",
+    text: "Con los datos de tu obra preparamos el presupuesto. El precio y el plazo se hablan con tu caso delante.",
+    photo: photos.cocinaAntes,
+  },
+  {
+    title: "La obra",
+    text: "Fontanería, electricidad, alicatado y montaje, con ideas de materiales y decoración si las quieres.",
+    photo: photos.banoGrisObra1,
+  },
+  {
+    title: "Entrega y limpieza",
+    text: "Lo último es recoger. Un cliente lo resume en Google: dejaron el piso limpio de polvo y suciedad.",
+    photo: photos.banoGris,
+  },
+];
+
 // How a job moves forward, told with DecorMG's own job photos.
 export const moments: { title: string; text: string; photo: Photo; gap: number }[] = [
   {

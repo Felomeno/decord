@@ -3,7 +3,8 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Frame } from "@/components/Frame";
-import { WhatsAppIcon } from "@/components/icons";
+import { FinalCta } from "@/components/home/FinalCta";
+import { ArrowRightIcon, WhatsAppIcon } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
 import { sourceLabel } from "@/content/images";
 import { getProject, kindLabel, projects } from "@/content/projects";
@@ -30,11 +31,13 @@ export async function generateMetadata({ params }: PageProps<"/proyectos/[slug]"
 // Params are known at build time (generateStaticParams); the boundary keeps the App Shell URL-free.
 export default function ProjectPage({ params }: PageProps<"/proyectos/[slug]">) {
   return (
-    <Suspense fallback={<p className="wrap section t-muted">Cargando la obra…</p>}>
+    <Suspense fallback={<p className="wrap sec muted">Cargando la obra…</p>}>
       <ProjectContent params={params} />
     </Suspense>
   );
 }
+
+const stageText = { antes: "Antes", "en obra": "En obra", después: "Después" } as const;
 
 async function ProjectContent({ params }: { params: PageProps<"/proyectos/[slug]">["params"] }) {
   const { slug } = await params;
@@ -56,17 +59,55 @@ async function ProjectContent({ params }: { params: PageProps<"/proyectos/[slug]
     <>
       <PageHead
         title={project.title}
+        kicker={project.neighbourhood ? `${kindLabel[project.kind]} · ${project.neighbourhood}` : kindLabel[project.kind]}
         crumbs={[
           { name: "Obras", path: "/proyectos" },
           { name: project.title, path: `/proyectos/${project.slug}` },
         ]}
         lead={<p>{project.summary}</p>}
-        photo={cover.height >= 600 ? cover : undefined}
+        photo={cover}
+        actions={
+          <a
+            href={whatsappUrl(message)}
+            className="btn btn--primary"
+            target="_blank"
+            rel="noopener"
+            data-track="cta_whatsapp"
+            data-track-place="project-head"
+          >
+            <WhatsAppIcon /> Quiero algo parecido
+          </a>
+        }
       />
 
-      <section className="bg-paper" aria-labelledby="hecho-title" style={{ paddingBottom: 96 }}>
-        <div className="wrap about__row">
-          <dl className="facts">
+      {project.pair ? (
+        <section className="sec sec--alt" aria-labelledby="pareja-title">
+          <div className="wrap">
+            <div className="sec-head" data-reveal>
+              <div className="sec-head__text">
+                <p className="kicker">Transformación</p>
+                <h2 id="pareja-title" className="h2 accent-bar">
+                  Antes y después
+                </h2>
+              </div>
+            </div>
+            <div className={`ba__pair${wide ? " ba__pair--wide" : ""}`} style={{ maxWidth: wide ? 1200 : 820 }} data-reveal>
+              <figure>
+                <Frame photo={project.pair.before} fill sizes="(max-width: 767px) 50vw, 600px" />
+                <figcaption className="tag tag--dark">Antes</figcaption>
+              </figure>
+              <figure>
+                <Frame photo={project.pair.after} fill sizes="(max-width: 767px) 50vw, 600px" />
+                <figcaption className="tag">Después</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="sec" aria-labelledby="hecho-title">
+        <div className="wrap split">
+          <dl className="facts" data-reveal>
             <div>
               <dt>Tipo</dt>
               <dd>{kindLabel[project.kind]}</dd>
@@ -82,122 +123,90 @@ async function ProjectContent({ params }: { params: PageProps<"/proyectos/[slug]
             <div>
               <dt>Fuente</dt>
               <dd>
-                <a href={project.source.url} className="prose-link" target="_blank" rel="noopener">
+                <a href={project.source.url} className="link" target="_blank" rel="noopener">
                   {project.source.label}
                 </a>
               </dd>
             </div>
           </dl>
-          <div>
-            <h2 id="hecho-title" className="t-h2" style={{ marginBottom: 24 }}>
+          <div data-reveal>
+            <p className="kicker">El trabajo</p>
+            <h2 id="hecho-title" className="h2 accent-bar">
               Qué se hizo
             </h2>
             {project.works ? (
-              <ul className="works">
+              <ul className="works works--cols" style={{ marginTop: 28 }}>
                 {project.works.map((work) => (
                   <li key={work}>{work}</li>
                 ))}
               </ul>
             ) : (
-              <p className="t-lead" style={{ maxWidth: "52ch" }}>
+              <p className="lead" style={{ marginTop: 28, maxWidth: "58ch" }}>
                 {project.visible}
               </p>
             )}
-            {project.works ? (
-              <p className="t-small t-muted" style={{ marginTop: 20 }}>
-                Lista tal como la publicó DecorMG.
-              </p>
-            ) : (
-              <p className="t-small t-muted" style={{ marginTop: 20 }}>
-                DecorMG no publicó descripción de esta obra: el texto describe solo lo que se ve en las fotos.
-              </p>
-            )}
+            <p className="small muted" style={{ marginTop: 20 }}>
+              {project.works
+                ? "Lista tal como la publicó DecorMG."
+                : "DecorMG no publicó descripción de esta obra: el texto describe solo lo que se ve en las fotos."}
+            </p>
           </div>
         </div>
       </section>
 
-      {project.pair ? (
-        <section className="bg-ice section" aria-labelledby="pareja-title">
+      {extraFrames.length ? (
+        <section className="sec sec--alt" aria-labelledby="fotos-title">
           <div className="wrap">
-            <h2 id="pareja-title" className="t-h2" style={{ marginBottom: 32 }}>
-              Antes y después
-            </h2>
-            <div className={`pair shutter${wide ? " pair--wide" : ""}`} style={{ maxWidth: wide ? 1200 : 760 }}>
-              <figure>
-                <Frame photo={project.pair.before} fill sizes="(max-width: 767px) 50vw, 600px" />
-                <figcaption>
-                  <span>Antes</span>
-                  <span className="t-muted">{sourceLabel[project.pair.before.source]}</span>
-                </figcaption>
-              </figure>
-              <figure>
-                <Frame photo={project.pair.after} fill sizes="(max-width: 767px) 50vw, 600px" />
-                <figcaption>
-                  <span>Después</span>
-                  <span className="t-muted">{sourceLabel[project.pair.after.source]}</span>
-                </figcaption>
-              </figure>
+            <div className="sec-head" data-reveal>
+              <div className="sec-head__text">
+                <p className="kicker">Galería</p>
+                <h2 id="fotos-title" className="h2 accent-bar">
+                  Fotos de la obra
+                </h2>
+              </div>
             </div>
+            <div className="gallery" data-reveal>
+              {extraFrames.map((frame, i) => (
+                <figure key={i}>
+                  <Frame photo={frame.photo} fill sizes="(max-width: 899px) 50vw, 25vw" />
+                  <figcaption className={`tag${frame.stage === "después" ? "" : " tag--dark"}`}>
+                    {stageText[frame.stage]}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <p className="small muted" style={{ marginTop: 24, maxWidth: "62ch" }}>
+              Fotos de la {sources.join(" y del ")}. Algunas son de baja resolución porque así están publicadas; uso
+              pendiente de autorización de DecorMG.
+            </p>
           </div>
         </section>
       ) : null}
 
-      {extraFrames.length ? (
-      <section className="section bg-paper" aria-labelledby="fotos-title">
+      <section className="sec" aria-label="Más obras">
         <div className="wrap">
-          <h2 id="fotos-title" className="t-h2" style={{ marginBottom: 32 }}>
-            Fotos
-          </h2>
-          <div className="gallery">
-            {extraFrames.map((frame, i) => (
-              <figure key={i} style={{ margin: 0 }}>
-                <Frame photo={frame.photo} fill sizes="(max-width: 767px) 50vw, 33vw" priority={i === 0 && !project.pair} />
-                <figcaption className="t-small" style={{ marginTop: 8 }}>
-                  {frame.stage.charAt(0).toUpperCase() + frame.stage.slice(1)}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-          <p className="t-small t-muted" style={{ marginTop: 24, maxWidth: "62ch" }}>
-            Fotos de la {sources.join(" y del ")}. Algunas son de baja resolución porque así están publicadas; uso
-            pendiente de autorización de DecorMG.
-          </p>
-        </div>
-      </section>
-      ) : null}
-
-      <section className="section bg-navy on-dark" aria-labelledby="pedir-title">
-        <div className="wrap grid-12" data-reveal>
-          <h2 id="pedir-title" className="t-h2" style={{ gridColumn: "1 / -1", maxWidth: "18ch" }}>
-            ¿Quieres algo parecido?
-          </h2>
-          <div style={{ gridColumn: "1 / -1", marginTop: 24, display: "flex", flexWrap: "wrap", gap: 12 }}>
-            <a
-              href={whatsappUrl(message)}
-              className="btn btn-primary"
-              target="_blank"
-              rel="noopener"
-              data-track="cta_whatsapp"
-              data-track-place="project"
-            >
-              <WhatsAppIcon /> Escribir citando esta obra
-            </a>
+          <div className="btn-row">
             {service ? (
-              <Link href={`/servicios/${service.slug}`} className="btn btn-secondary">
-                {service.name}
+              <Link href={`/servicios/${service.slug}`} className="btn btn--ghost btn--sm">
+                {service.name} <ArrowRightIcon />
               </Link>
             ) : null}
+            <Link href="/proyectos" className="btn btn--ghost btn--sm">
+              Todas las obras <ArrowRightIcon />
+            </Link>
           </div>
-          <nav aria-label="Otras obras" className="t-small" style={{ gridColumn: "1 / -1", marginTop: 64, display: "flex", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
-            <Link href={`/proyectos/${prev.slug}`} className="prose-link">
+          <nav aria-label="Otras obras" className="next-prev">
+            <Link href={`/proyectos/${prev.slug}`} className="link">
               Anterior: {prev.title}
             </Link>
-            <Link href={`/proyectos/${next.slug}`} className="prose-link">
+            <Link href={`/proyectos/${next.slug}`} className="link">
               Siguiente: {next.title}
             </Link>
           </nav>
         </div>
       </section>
+
+      <FinalCta title="¿Quieres algo parecido?" message={message} />
     </>
   );
 }

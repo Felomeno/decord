@@ -1,5 +1,7 @@
 # 05 · Sistema de diseño — Architectural Editorial Blue
 
+> **Sustituido** el 15 de octubre de 2026 por el rediseño oscuro descrito en `09-rediseno.md`. Se conserva como registro de la primera dirección.
+
 Implementado en `src/app/globals.css` (tokens CSS + `@theme` de Tailwind 4). Todo componente usa tokens; no hay colores sueltos.
 
 ## 1. Dirección y concepto

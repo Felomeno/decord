@@ -14,7 +14,7 @@ export default function CookiesPage() {
         crumbs={[{ name: "Cookies", path: "/cookies" }]}
         lead={<p>Esta web no instala cookies propias ni de terceros, por eso no muestra un aviso de cookies.</p>}
       />
-      <section className="bg-paper" style={{ paddingBottom: "var(--section)" }}>
+      <section className="sec" style={{ paddingTop: 56 }}>
         <div className="wrap">
           <div className="legal">
             <h2>Situación actual</h2>
