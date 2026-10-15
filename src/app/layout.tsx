@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Manrope } from "next/font/google";
 import { FloatingContact } from "@/components/FloatingContact";
+import { ScrollMotion } from "@/components/ScrollMotion";
 import { ClickTracking } from "@/components/ClickTracking";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <SiteFooter />
         <FloatingContact />
+        <ScrollMotion />
         <ClickTracking />
       </body>
     </html>

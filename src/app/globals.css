@@ -2302,12 +2302,14 @@ a.pcard:focus-visible {
 }
 
 /* ───────────────────────── Motion ─────────────────────────
-   Entrances are scroll-driven CSS: no JS, nothing stays hidden if unsupported.
-   The hero copy enters on load; everything else enters as its section scrolls in. */
+   GSAP + ScrollTrigger (components/ScrollMotion.tsx) drives the scroll choreography and adds
+   .gsap-on to <html> while it runs. Without it (no JS, script error, reduced motion) the
+   scroll-driven CSS below is the fallback: no JS, nothing stays hidden if unsupported.
+   The hero copy enters on load in both cases. */
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    [data-reveal] > * {
+    html:not(.gsap-on) [data-reveal] > * {
       animation: reveal-up linear both;
       animation-timeline: view();
       animation-range: entry calc(var(--i, 0) * 6%) entry calc(50% + var(--i, 0) * 6%);
@@ -2331,8 +2333,33 @@ a.pcard:focus-visible {
     animation-delay: calc(var(--i, 1) * 90ms);
   }
 
-  .hero__media .frame img {
+  html:not(.gsap-on) .hero__media .frame img {
     animation: hero-settle 1600ms var(--ease-out) both;
+  }
+}
+
+/* Before and after, desktop: the pair is held on screen (sticky inside a taller track) while
+   --ba-p goes 0 to 1 with the scroll. 0: the before photo alone, centred. 1: both side by side,
+   which is also the resting state when GSAP is not running. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .gsap-on .ba-track::after {
+    content: "";
+    display: block;
+    height: 75vh;
+  }
+  .gsap-on .ba {
+    position: sticky;
+    top: var(--ba-top, 96px);
+  }
+  .gsap-on .ba .ba__pair figure:first-child {
+    z-index: 1;
+    transform: translateX(calc((1 - var(--ba-p, 1)) * (50% + 5px))) scale(calc(1.06 - var(--ba-p, 1) * 0.06));
+  }
+  .gsap-on .ba .ba__pair figure:last-child {
+    clip-path: inset(0 0 0 calc((1 - var(--ba-p, 1)) * 100%) round var(--radius-sm));
+  }
+  .gsap-on .ba .ba__info {
+    transform: translateY(calc((1 - var(--ba-p, 1)) * 24px));
   }
 }
 

@@ -107,3 +107,20 @@ A petición del usuario se sustituyen la paleta azul marino y la tipografía fut
 **Otros ajustes:** botones con texto negro sobre azul hielo, peso 800 y elevación de 2 px al pasar el ratón; botón fantasma con borde más visible y hover azul; rótulos con raya de acento delante; barra de acento más gruesa; cifras de confianza, pasos y tarjetas en Anton más grandes; velo del hero en móvil más denso detrás del titular.
 
 **Verificación:** typecheck, lint y build sin errores; `scripts/qa.mjs` 0 fallos en 15 rutas × 5 anchuras; revisión de capturas a 1440 y 390. Lighthouse: `/` móvil 92 (LCP 3,3 s), escritorio 100; `/contacto` móvil 89 (LCP 3,0 s); accesibilidad y buenas prácticas 100, CLS 0, SEO 69 solo por el `noindex` de la demo. El rendimiento móvil baja unos puntos respecto a la primera versión por la carga de las dos fuentes nuevas.
+
+## 8. Capa de movimiento con GSAP + ScrollTrigger
+
+`src/components/ScrollMotion.tsx`, montado una vez en el layout y reconstruido en cada ruta con `useGSAP()` (dependencia `pathname`, `revertOnUpdate`). `gsap.matchMedia()` separa escritorio (≥1024 px) y móvil y no hace nada con `prefers-reduced-motion: reduce`. Mientras corre añade `.gsap-on` a `<html>`; sin esa clase (sin JS, error o movimiento reducido) quedan las entradas CSS anteriores y todo el contenido visible. Los estados iniciales se ponen en tiempo de ejecución y solo a elementos por debajo del primer pantallazo: no hay parpadeos ni retraso del LCP.
+
+| Efecto | Dónde | Cómo |
+|---|---|---|
+| Text reveal | H2 de sección | `SplitText` por líneas con máscara; cada línea sube desde abajo (stagger 0,09 s). `aria-label` automático |
+| Stagger | Tarjetas de por qué, servicios, obras, pasos, opiniones y tarjetas interiores | `ScrollTrigger.batch`, subida + opacidad, la foto de cada tarjeta se asienta desde escala 1,18 |
+| Image reveal | Fotos sueltas (servicios, galerías, fichas) | `clip-path` que abre desde abajo + escala 1,3 → 1 |
+| Scroll scrub | Foto del hero, fotos de cabecera interior, fotos 4:3 de servicios, fondo del CTA final | Deriva vertical ligada al scroll con sobreescala para no mostrar bordes; el texto del hero se aleja en escritorio |
+| Sección fijada | Antes y después de la portada, solo escritorio | La pareja queda fija (CSS `sticky` dentro de una pista más alta, no `pin` de GSAP, para no mover nodos de React) mientras `--ba-p` va de 0 a 1: primero el antes solo y centrado, luego el después se abre a su lado. Al terminar queda el estado normal lado a lado |
+| Transición entre secciones | Sección clara "Qué esperar" y CTA final | Se abren desde una tarjeta con márgenes y esquinas redondeadas hasta ocupar todo el ancho |
+
+Solo `transform`, `opacity`, `clip-path` y una variable CSS. Sin secuestro del scroll ni saltos (CLS 0).
+
+**Verificación:** `scripts/motion-check.mjs` recorre `/`, `/servicios`, una obra y `/nosotros` con rueda de ratón en Edge a 1440×900 y 390×844, guarda capturas del antes/después fijado al 0, 50 y 100 % y falla si algo queda oculto o recortado, si hay errores de consola, si la navegación interna no reconstruye la capa, si con movimiento reducido sigue animando o si sin JS hay titulares o fotos ocultos: 0 fallos. `scripts/qa.mjs`: 0 fallos. Lighthouse `/`: escritorio 100 en todo salvo SEO 69 (noindex); móvil 88 (LCP 3,5 s, TBT 170 ms; antes 92) por el peso de GSAP, ScrollTrigger y SplitText.
