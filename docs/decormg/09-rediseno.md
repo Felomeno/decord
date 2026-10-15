@@ -139,3 +139,15 @@ Solo `transform`, `opacity`, `clip-path` y una variable CSS. Sin secuestro del s
 - Corregido de paso: las etiquetas oscuras (`.tag--dark`, por ejemplo «Antes») tenían texto negro desde el cambio de paleta.
 
 **Verificación:** typecheck, lint y build sin errores; `scripts/qa.mjs` y `scripts/motion-check.mjs` sin fallos; Lighthouse `/` en ordenador 100/100/100 (LCP 0,7 s, la foto póster) y en móvil 86 (LCP 3,6 s).
+
+## 10. Hero con fotos de obra que rotan (en lugar de vídeo)
+
+A petición del usuario, el fondo del hero pasa a ser una rotación de resultados reales de obra en lugar de un vídeo. El vídeo que se aportó no era una obra y no se usó; el código de vídeo (`HeroVideo`) se ha retirado.
+
+- `content/hero.ts → heroSlides`: cinco fotos "después" en resolución completa: cocina renovada (horizontal en ordenador, cocina abierta en vertical en móvil), baño en blanco veteado y madera, salón con papel pintado, baño con espejo dorado y roble, y salón reformado. Las fotos de Instagram y Cronoshare (375–640 px) no se usan porque se verían blandas a pantalla completa.
+- Rotación solo con CSS: 6 s por foto, con un fundido encadenado (la nueva entra encima y la anterior no se va hasta que la nueva está completa, así que nunca se ve negro) y un ligero acercamiento de cada foto. Cada diapositiva lleva su velo y una etiqueta «Obra real: …» (decorativa, `aria-hidden`).
+- La primera foto es la imagen LCP: precargada y sin animación de entrada. Las otras cuatro (`HeroSlideImage`) se piden cuando la página ha terminado de cargar y el navegador está libre, para no competir con ella.
+- Con `prefers-reduced-motion` solo se ve la primera foto, sin rotación.
+- **Avisos de Next en desarrollo («2 issues»):** eran errores de hidratación. `ScrollMotion` modificaba el HTML (SplitText, estilos iniciales) de secciones que React aún no había hidratado, porque los límites de Suspense se hidratan en tareas posteriores al layout. Ahora espera a que todas las secciones de `<main>` estén hidratadas (como máximo 3 s) antes de montar la capa; arranca hacia los 0,4 s. También se silencian los avisos de GSAP por selectores que no existen en una ruta concreta. Consola limpia en desarrollo en `/`, `/servicios`, `/nosotros` y `/contacto`, a 1440 y 390 px.
+
+**Verificación:** typecheck, lint y build sin errores; `scripts/qa.mjs` y `scripts/motion-check.mjs` sin fallos; la rotación, comprobada en Edge a 1440 y 390 px, recorre las cinco fotos y vuelve a la primera. Lighthouse `/` en ordenador: 99–100, accesibilidad 100. En móvil: 74–79 (LCP 3,9–4,1 s, TBT 320–350 ms), medido con el servidor de desarrollo del usuario activo en paralelo. El LCP no se debe a la animación (desactivarla no cambió el resultado), sino al tiempo que el hilo principal tarda en ejecutar el JavaScript con la CPU limitada; conviene medirlo de nuevo con el equipo en reposo.

@@ -1,39 +1,23 @@
 import { photos, type Photo } from "./images";
 
-export type HeroVideoSource = {
-  src: string;
-  type: "video/mp4" | "video/webm";
-  /** Media query for this file, e.g. a lighter vertical cut for phones. */
-  media?: string;
+export type HeroSlide = {
+  /** Finished result of a real DecorMG job. */
+  photo: Photo;
+  /** Art-directed version for desktop, when the job has a landscape shot. */
+  desktop?: Photo;
+  /** Short label shown on the slide: the job it comes from. */
+  label: string;
 };
 
-export type HeroMedia = {
-  /**
-   * Real DecorMG footage only. Empty until DecorMG supplies an authorised clip: their Instagram
-   * reels need a signed-in session and rights to download, so none is used yet and the hero shows
-   * the poster photos. To switch the video on, put the files in public/videos and list them here,
-   * phones first, e.g.
-   *   { src: "/videos/hero-720x1280.mp4", type: "video/mp4", media: "(max-width: 767px)" },
-   *   { src: "/videos/hero-1920x1080.webm", type: "video/webm" },
-   *   { src: "/videos/hero-1920x1080.mp4", type: "video/mp4" },
-   * Aim for 8 to 15 s loops, no audio track, about 2 to 4 MB per file.
-   */
-  video: HeroVideoSource[];
-  /** Shown first on every device, and the only thing shown without video or with reduced motion. */
-  poster: { desktop: Photo; mobile: Photo; alt: string };
-  /** The job the poster belongs to, linked from the caption. */
-  caption: { desktop: { text: string; href: string }; mobile: { text: string; href: string } };
-};
-
-export const hero: HeroMedia = {
-  video: [],
-  poster: {
-    desktop: photos.cocinaDespues,
-    mobile: photos.cocinaAbierta,
-    alt: "Cocina blanca reformada por DecorMG",
-  },
-  caption: {
-    desktop: { text: "Obra real: cocina renovada", href: "/proyectos/cocina-antes-despues" },
-    mobile: { text: "Obra real: cocina abierta", href: "/proyectos/cocina-abierta" },
-  },
-};
+/**
+ * Background of the home hero: finished jobs that crossfade in turn. Only full-resolution
+ * "después" photos (the 375–640 px Instagram and Cronoshare shots would look soft full screen).
+ * The first slide is the LCP image and the only one shown with reduced motion.
+ */
+export const heroSlides: HeroSlide[] = [
+  { photo: photos.cocinaAbierta, desktop: photos.cocinaDespues, label: "Cocina renovada" },
+  { photo: photos.banoMarmol, label: "Baño en blanco veteado y madera" },
+  { photo: photos.salon1, label: "Salón con papel pintado" },
+  { photo: photos.banoLaton, label: "Baño con espejo dorado y roble" },
+  { photo: photos.salon2, label: "Salón reformado" },
+];

@@ -7,6 +7,8 @@ import { SplitText } from "gsap/SplitText";
 import { usePathname } from "next/navigation";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
+// Selectors are shared across routes; a page without one of them is expected, not an error.
+gsap.config({ nullTargetWarn: false });
 
 /** Cards that enter in a staggered batch. */
 const CARDS = ".why-grid > *, .svc-grid > *, .proj-grid > *, .process > *, .reviews > *, .cards > *";
@@ -33,11 +35,11 @@ export function ScrollMotion() {
   const pathname = usePathname();
 
   useGSAP(
-    () => {
+    (_context, contextSafe) => {
       const root = document.documentElement;
       const mm = gsap.matchMedia();
 
-      mm.add(
+      const setup = contextSafe!(() => mm.add(
         {
           motion: "(prefers-reduced-motion: no-preference)",
           desktop: "(min-width: 1024px)",
@@ -258,13 +260,30 @@ export function ScrollMotion() {
 
           return () => root.classList.remove("gsap-on");
         },
-      );
+      ));
+
+      // React hydrates Suspense boundaries in later tasks than this layout component. Touching
+      // their markup earlier makes hydration mismatch, so start once every section is hydrated.
+      let frame = 0;
+      const startedAt = performance.now();
+      const waitForHydration = () => {
+        const pending = Array.from(document.querySelectorAll("main section, main header")).some(
+          (el) => !Object.keys(el).some((key) => key.startsWith("__reactFiber")),
+        );
+        if (pending && performance.now() - startedAt < 3000) frame = requestAnimationFrame(waitForHydration);
+        else setup();
+      };
+      waitForHydration();
 
       // Photos and fonts change heights after first paint; measure again once they settle.
       const refresh = () => ScrollTrigger.refresh();
       document.fonts?.ready.then(refresh);
       window.addEventListener("load", refresh, { once: true });
-      return () => window.removeEventListener("load", refresh);
+      return () => {
+        cancelAnimationFrame(frame);
+        window.removeEventListener("load", refresh);
+        mm.revert();
+      };
     },
     { dependencies: [pathname], revertOnUpdate: true },
   );

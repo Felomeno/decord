@@ -718,9 +718,14 @@ img {
   z-index: -1;
 }
 
-.hero__media picture,
-.hero__media img,
-.hero__video {
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero__slide picture,
+.hero__slide img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -728,23 +733,66 @@ img {
   object-fit: cover;
 }
 
-.hero__video {
-  opacity: 0;
-  transition: opacity 900ms ease;
-}
-
-.hero__video.is-playing {
-  opacity: 1;
-}
-
-/* Darker at the foot (where the next section starts) and behind the type, light at the top. */
-.hero__media::after {
+/* Each slide carries its own scrim (darker at the foot and behind the type, light at the top),
+   so the label above it stays readable while the slides crossfade. */
+.hero__slide::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
     radial-gradient(ellipse 70% 55% at 50% 52%, rgb(9 11 14 / 0.38), rgb(9 11 14 / 0) 70%),
     linear-gradient(to bottom, rgb(9 11 14 / 0.42) 0%, rgb(9 11 14 / 0.3) 30%, rgb(9 11 14 / 0.5) 70%, rgb(9 11 14 / 0.92) 100%);
+}
+
+/* Bottom left, clear of the floating WhatsApp button on the right. */
+.hero__label {
+  position: absolute;
+  left: var(--margin);
+  bottom: 40px;
+  z-index: 1;
+}
+
+.hero__slide:not(:first-child) {
+  opacity: 0;
+}
+
+/* Rotation: every slide runs the same cycle, offset by its turn. It fades in over the one before,
+   which only drops once the new one is fully in, so the photos never dip to black. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__slide {
+    animation: hero-slide var(--slide-cycle) linear var(--slide-delay) infinite backwards;
+  }
+  .hero__slide picture,
+  .hero__slide > img {
+    animation: hero-push var(--slide-cycle) linear var(--slide-delay) infinite backwards;
+  }
+  .hero__slide:first-child {
+    animation-fill-mode: none;
+  }
+}
+
+@keyframes hero-slide {
+  0% {
+    opacity: 0;
+  }
+  4%,
+  24% {
+    opacity: 1;
+  }
+  25.5%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hero-push {
+  0% {
+    transform: scale(1);
+  }
+  25.5%,
+  100% {
+    transform: scale(1.08);
+  }
 }
 
 .hero__inner {
@@ -811,27 +859,6 @@ img {
   color: #f5c542;
 }
 
-/* Bottom left, clear of the floating WhatsApp button on the right. */
-.hero__caption {
-  position: absolute;
-  left: var(--margin);
-  bottom: 24px;
-  z-index: 1;
-}
-
-.hero__caption--desk {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .hero__caption--desk {
-    display: inline-flex;
-  }
-  .hero__caption--mob {
-    display: none;
-  }
-}
-
 @media (max-width: 599px) {
   .hero__ctas .btn {
     flex: 1 1 100%;
@@ -840,8 +867,8 @@ img {
     align-items: flex-end;
     padding-bottom: 140px;
   }
-  /* Phones: the caption moves to the top so the floating buttons keep the foot clear. */
-  .hero__caption {
+  /* Phones: the label moves to the top so the floating buttons keep the foot clear. */
+  .hero__label {
     top: 16px;
     bottom: auto;
     left: auto;
@@ -2352,9 +2379,6 @@ a.pcard:focus-visible {
     animation: hero-failsafe 0s 2.5s forwards;
   }
 
-  html:not(.gsap-on) .hero__media img {
-    animation: hero-settle 1600ms var(--ease-out) both;
-  }
 }
 
 @keyframes hero-failsafe {
@@ -2392,12 +2416,6 @@ a.pcard:focus-visible {
   from {
     opacity: 0;
     transform: translateY(28px);
-  }
-}
-
-@keyframes hero-settle {
-  from {
-    transform: scale(1.06);
   }
 }
 
