@@ -21,6 +21,8 @@ export type Project = {
   frames: Frame[];
   pair?: { before: Photo; after: Photo };
   source: { label: string; url: string };
+  /** Instagram shows "Contenido generado con IA" on a post this job's photos come from. */
+  aiLabel?: boolean;
   service?: "reformas-de-banos" | "reformas-de-cocinas" | "reformas-integrales";
 };
 
@@ -51,6 +53,7 @@ export const projects: Project[] = [
     ],
     pair: { before: photos.aguilasAntes, after: photos.aguilasDespues },
     source: { label: "Publicación en Instagram, 13 de octubre de 2026", url: ig("DecjXmOjUAF") },
+    aiLabel: true,
     service: "reformas-de-banos",
   },
   {
@@ -67,6 +70,7 @@ export const projects: Project[] = [
     ],
     pair: { before: photos.luceroAntes, after: photos.luceroDespues },
     source: { label: "Publicación en Instagram, 16 de septiembre de 2026", url: ig("DdWC44mjRsT") },
+    aiLabel: true,
     service: "reformas-de-banos",
   },
   {
@@ -88,6 +92,7 @@ export const projects: Project[] = [
     ],
     frames: [{ photo: photos.aluche, stage: "después" }],
     source: { label: "Publicación en Instagram, 11 de septiembre de 2026", url: ig("DdJ6p7KDfyi") },
+    aiLabel: true,
     service: "reformas-integrales",
   },
   {
@@ -104,6 +109,7 @@ export const projects: Project[] = [
     ],
     pair: { before: photos.villaverdeAntes, after: photos.villaverdeDespues },
     source: { label: "Publicación en Instagram, 21 de septiembre de 2026", url: ig("DdjA8icjZxW") },
+    aiLabel: true,
   },
   {
     slug: "cocina-antes-despues",
@@ -117,7 +123,7 @@ export const projects: Project[] = [
       { photo: photos.cocinaDespues, stage: "después" },
     ],
     pair: { before: photos.cocinaAntes, after: photos.cocinaDespues },
-    source: { label: "Fotos de la ficha de Google de DecorMG", url: maps },
+    source: { label: "Fotos subidas por una clienta a la ficha de Google de DecorMG", url: maps },
     service: "reformas-de-cocinas",
   },
   {
@@ -144,7 +150,7 @@ export const projects: Project[] = [
       { photo: photos.banoLatonObra2, stage: "en obra" },
       { photo: photos.banoLaton, stage: "después" },
     ],
-    source: { label: "Fotos de la ficha de Google y del perfil de Cronoshare de DecorMG", url: crono },
+    source: { label: "Fotos del perfil de Cronoshare de DecorMG y foto subida por una clienta a su ficha de Google", url: crono },
     service: "reformas-de-banos",
   },
   {
@@ -184,7 +190,7 @@ export const projects: Project[] = [
       { photo: photos.salon1, stage: "después" },
       { photo: photos.salon2, stage: "después" },
     ],
-    source: { label: "Fotos de la ficha de Google de DecorMG", url: maps },
+    source: { label: "Fotos subidas por una clienta a la ficha de Google de DecorMG", url: maps },
     service: "reformas-integrales",
   },
   {

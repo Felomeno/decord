@@ -11,7 +11,7 @@ export function Reviews() {
         <SectionHead id="opiniones-title" kicker="Opiniones en Google" title="Lo que dicen los clientes">
           <p className="muted">
             Extractos literales de opiniones públicas. {site.google.rating} de 5 con {site.google.reviewCount} opiniones,
-            consultado el {site.google.checkedOn}.
+            consultado el {site.google.checkedOn}. Google indica que las reseñas no se verifican.
           </p>
         </SectionHead>
         <div className="reviews" data-reveal>

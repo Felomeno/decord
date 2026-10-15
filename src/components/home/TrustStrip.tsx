@@ -1,5 +1,4 @@
 import { StarIcon } from "@/components/icons";
-import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 
 /** The four answers a visitor looks for before scrolling: proof, area, work and how to ask. */
@@ -20,11 +19,11 @@ export function TrustStrip() {
         </li>
         <li className="trust__item">
           <span className="trust__value">Madrid</span>
-          <span className="trust__label">Base en Latina, obras en toda la Comunidad</span>
+          <span className="trust__label">Base en Latina, trabaja en la Comunidad de Madrid</span>
         </li>
         <li className="trust__item">
-          <span className="trust__value">{projects.length} obras</span>
-          <span className="trust__label">Con fotos reales en esta web</span>
+          <span className="trust__value">Obras reales</span>
+          <span className="trust__label">Fotos de DecorMG y de sus clientes</span>
         </li>
         <li className="trust__item">
           <span className="trust__value">Sin compromiso</span>

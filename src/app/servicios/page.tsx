@@ -77,7 +77,7 @@ export default function ServicesPage() {
               </h2>
               <p className="muted">
                 También como trabajo independiente, sin reformar toda la vivienda. No publicamos precios cerrados ni
-                plazos fijos: dependen de cada obra y se dan en el presupuesto.
+                plazos fijos: dependen de cada obra; pregúntalos al pedir presupuesto.
               </p>
             </div>
           </div>

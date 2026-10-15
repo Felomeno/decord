@@ -14,8 +14,8 @@ const reasons = [
   },
   {
     tag: "Obra documentada",
-    title: "Cada obra, con su antes",
-    text: "Publicamos el antes, la obra y el resultado, con el barrio y la lista de trabajos.",
+    title: "Obras con su antes",
+    text: "En Instagram publicamos el antes, la obra y el resultado, con el barrio y la lista de trabajos.",
     photo: photos.cocinaObra,
     sizes: "(max-width: 899px) 100vw, 42vw",
   },

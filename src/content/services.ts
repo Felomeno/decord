@@ -28,11 +28,11 @@ export const services: Service[] = [
     metaDescription:
       "Reformas de baño completas y parciales en Madrid: fontanería, electricidad, alicatado, plato de ducha, mampara y muebles. Obras reales en Las Águilas y Lucero.",
     intro:
-      "Es el trabajo que más publicamos. Hacemos el baño entero, desde la fontanería hasta el último remate, o solo la parte que falla: cambiar la bañera por un plato de ducha, poner mampara o cambiar el mueble.",
+      "Hacemos el baño entero, desde la fontanería hasta el último remate, o solo la parte que falla: cambiar la bañera por un plato de ducha, poner mampara o cambiar el mueble.",
     includes: [
       { title: "Fontanería y electricidad", text: "Tomas nuevas, desagües y enchufes donde los necesites; en Las Águilas los clientes eligieron la distribución." },
       { title: "Alicatado y solado", text: "Gres de gran formato, azulejo en relieve o porcelánico efecto madera en el suelo, con sus remates." },
-      { title: "Bañera por plato de ducha", text: "Levantamos el suelo hasta el desagüe, colocamos el plato y la mampara, como en Lucero." },
+      { title: "Bañera por plato de ducha", text: "Quitamos la bañera y dejamos plato de ducha y mampara, como en la reforma parcial de Aluche. En Lucero colocamos plato, mampara y remates de alicatado." },
       { title: "Muebles, espejos y luz", text: "Mueble suspendido, lavabo sobre encimera, espejo con luz e iluminación LED en la zona de ducha." },
       { title: "Puertas correderas", text: "Casoneto para puerta corredera cuando el baño es pequeño y la puerta abatible estorba." },
     ],
@@ -57,11 +57,11 @@ export const services: Service[] = [
     metaDescription:
       "Reformas de cocina en Madrid: muebles, encimeras, electrodomésticos integrados y cocinas abiertas al comedor. Antes y después de obras reales de DecorMG.",
     intro:
-      "Renovamos la cocina entera o cambiamos lo que se ha quedado viejo: la encimera, los muebles, los fogones de gas por una placa de inducción. También abrimos la cocina al comedor cuando el espacio lo permite.",
+      "Renovamos la cocina entera o cambiamos lo que se ha quedado viejo: la encimera, los muebles, los fogones de gas por una placa de inducción. También hemos hecho cocinas abiertas al comedor.",
     includes: [
       { title: "Muebles y encimera", text: "Muebles nuevos sin tiradores o con ellos, encimeras claras veteadas o de madera." },
       { title: "Electrodomésticos integrados", text: "Horno, placa y columnas de electrodomésticos montados en su hueco." },
-      { title: "Cambio de encimera suelto", text: "Si los muebles están bien, cambiamos solo la encimera, como en la reforma parcial de Aluche." },
+      { title: "Cambio de encimera suelto", text: "Si los muebles están bien, cambiamos solo la encimera. El cambio de encimera fue uno de los trabajos de la reforma parcial de Aluche." },
       { title: "Alicatado y suelo", text: "Retiramos el azulejo antiguo y dejamos paredes y suelo terminados." },
     ],
     before: [
@@ -70,8 +70,8 @@ export const services: Service[] = [
       "El barrio o código postal aproximado.",
     ],
     faq: [
-      { q: "¿Podéis cambiar solo la encimera?", a: "Sí. En la reforma parcial de Aluche cambiamos la encimera junto con otros trabajos sueltos." },
-      { q: "¿Hacéis cocinas abiertas al salón?", a: "Sí, tenemos una cocina abierta al comedor publicada. Si implica tirar un tabique, lo valoramos con tu caso concreto." },
+      { q: "¿Podéis cambiar solo la encimera?", a: "Sí. En la reforma parcial de Aluche el cambio de encimera fue uno de los trabajos sueltos." },
+      { q: "¿Hacéis cocinas abiertas al salón?", a: "Tenemos publicada una cocina abierta al comedor. Si implica tirar un tabique, lo valoramos con tu caso concreto." },
       { q: "¿Cuánto cuesta una cocina?", a: "Depende de los metros, los muebles y los electrodomésticos. Cuéntanos qué quieres y te preparamos un presupuesto sin compromiso." },
     ],
     builderType: "Reforma de cocina",

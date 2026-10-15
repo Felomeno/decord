@@ -128,6 +128,15 @@ async function ProjectContent({ params }: { params: PageProps<"/proyectos/[slug]
                 </a>
               </dd>
             </div>
+            {project.aiLabel ? (
+              <div>
+                <dt>Aviso</dt>
+                <dd>
+                  Instagram marca una publicación de esta obra como «Contenido generado con IA». Falta que DecorMG confirme que las
+                  fotos no están retocadas.
+                </dd>
+              </div>
+            ) : null}
           </dl>
           <div data-reveal>
             <p className="kicker">El trabajo</p>

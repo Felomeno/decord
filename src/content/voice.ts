@@ -1,15 +1,16 @@
 import { photos, type Photo } from "./images";
 
-// Literal extracts from public Google reviews (checked 14 Oct 2026). Publication requires permission.
+// Literal extracts from public Google reviews, in their original order (checked 14 and 15 Oct 2026).
+// Google states that its reviews are not verified. Publication requires permission.
 export const reviews = [
   {
     author: "Juan De Dios D.",
     context: "Opinión en Google, hace 3 meses",
-    opening: "No puedo estar más contento con el resultado […]",
+    opening:
+      "Conocí esta empresa de reformas a través de Instagram y por un amigo al que también le habían realizado una reforma y no puedo estar más contento con el resultado […]",
     body: [
-      "Conocí esta empresa de reformas a través de Instagram y por un amigo al que también le habían realizado una reforma […]. Era un piso con decoración y azulejos bastante antiguo y han realizado un acabado bastante conseguido y bonito con materiales muy actuales que se llevan ahora.",
-      "[…] van al mínimo detalle con cosas que a veces se pueden escapar. Incluso al acabar, han dejado el piso bastante limpio de polvo y resto de suciedad que suele quedar después de las obras.",
-      "Desde luego que los volvería a elegir. Los recomiendo totalmente.",
+      "Era un piso con decoración y azulejos bastante antiguo y han realizado un acabado bastante conseguido y bonito con materiales muy actuales que se llevan ahora.",
+      "[…] Incluso al acabar, han dejado el piso bastante limpio de polvo y resto de suciedad que suele quedar después de las obras.",
     ],
   },
   {
@@ -40,8 +41,8 @@ export const faq = [
     a: "En la Comunidad de Madrid. Nuestra base está en Latina y las últimas obras publicadas son de Aluche, Las Águilas, Lucero y Villaverde.",
   },
   {
-    q: "¿El presupuesto tiene coste?",
-    a: "No. El presupuesto es sin compromiso.",
+    q: "¿Pedir presupuesto me compromete a algo?",
+    a: "No. DecorMG ofrece presupuesto sin compromiso.",
   },
   {
     q: "¿Cuánto cuesta una reforma?",
@@ -99,7 +100,7 @@ export const moments: { title: string; text: string; photo: Photo; gap: number }
   },
   {
     title: "El antes",
-    text: "Fotografiamos cómo está. Así publicamos cada obra: primero su antes, luego el resultado.",
+    text: "Fotografiamos cómo está. Así publicamos muchas obras en Instagram: primero su antes, luego el resultado.",
     photo: photos.aguilasAntes,
     gap: 40,
   },

@@ -31,7 +31,7 @@ export const site = {
   google: {
     rating: "4,8",
     reviewCount: 26,
-    checkedOn: "14 de octubre de 2026",
+    checkedOn: "15 de octubre de 2026",
   },
   // Demo deployments stay out of search engines. Set NEXT_PUBLIC_SITE_INDEXABLE=true only on the
   // approved production domain (see README).

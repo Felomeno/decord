@@ -14,7 +14,11 @@ export function BeforeAfter() {
     <section className="sec sec--alt" aria-labelledby="antes-title">
       <div className="wrap">
         <SectionHead id="antes-title" kicker="Transformación" title="Antes y después">
-          <p className="muted">Cuatro obras con foto del antes y del resultado en el mismo espacio.</p>
+          <p className="muted">
+            Cuatro obras con foto del antes y del resultado en el mismo espacio. Las de Las Águilas, Lucero y Villaverde
+            salen de publicaciones que Instagram marca como «Contenido generado con IA»; falta que DecorMG confirme que
+            las fotos no están retocadas.
+          </p>
         </SectionHead>
         <div className="ba-track" data-reveal>
           <BeforeAfterViewer projects={pairs.map((p) => getProject(p.slug)!)} labels={pairs.map((p) => p.label)} />

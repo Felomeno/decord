@@ -26,8 +26,9 @@ export default function ProjectsPage() {
         crumbs={[{ name: "Obras", path: "/proyectos" }]}
         lead={
           <p>
-            {projects.length} obras con fotos de DecorMG, agrupadas por tipo. Las que tienen barrio y lista de trabajos
-            vienen de sus publicaciones; en el resto describimos solo lo que se ve en las fotos.
+            Fotos publicadas por DecorMG o subidas por sus clientes a su ficha de Google, agrupadas por tipo. Las obras
+            con barrio y lista de trabajos vienen de sus publicaciones; en el resto, la agrupación de fotos es nuestra y
+            describimos solo lo que se ve.
           </p>
         }
       />

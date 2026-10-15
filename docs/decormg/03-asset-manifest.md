@@ -58,3 +58,17 @@ Leyenda de estado: **OK-demo** (se usa en la demo, permiso pendiente) · **Exclu
 - Antes/después reales del mismo espacio: 4 parejas (cocina, Las Águilas, Lucero, Villaverde). Encuadres distintos → se muestran **lado a lado**, sin comparador deslizante (un deslizador exige encuadres alineados y sugeriría una manipulación que no existe).
 - Recortes: `next/image` con `object-position` por imagen (punto focal en `src/content/images.ts`).
 - Pendiente: fotos originales en alta (sobre todo Instagram y Cronoshare), logo vectorial, autorización escrita, confirmación de autoría de fotos de Maps sin marca de agua.
+
+## Actualización 15-10-2026 (auditoría de veracidad)
+
+El visor de fotos de Google Maps muestra quién subió cada foto. Resultado:
+
+| Quién la subió | Fotos |
+|---|---|
+| La empresa | gm-01, gm-03, gm-08, gm-09 |
+| Una clienta | gm-02, gm-04, gm-05 y gm-07 (excluida) |
+| Otra clienta | gm-06, gm-10 |
+
+En la web, las fotos que subieron clientas tienen el origen `google-client` y se presentan como «subidas por una clienta». Su publicación necesita también el permiso de esas clientas.
+
+Instagram muestra la etiqueta «Contenido generado con IA» en las publicaciones `DecEkdWNFyu`, `DdWC44mjRsT`, `DdjA8icjZxW`, `Ddi3oh3tPWl`, `DdJ6p7KDfyi` y `Dee6_PQtQZU`. Detalle completo en `AUDITORIA_VERACIDAD.md`.

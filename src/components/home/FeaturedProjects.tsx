@@ -30,8 +30,8 @@ export function FeaturedProjects() {
           }
         >
           <p className="muted">
-            Fotos de DecorMG publicadas en su Instagram, su ficha de Google y su perfil de Cronoshare. Cada obra indica
-            si hay foto del antes, de la obra y del resultado.
+            Fotos publicadas por DecorMG en Instagram, Google y Cronoshare, y fotos que sus clientes subieron a su ficha de
+            Google. Cada obra indica si hay foto del antes, de la obra y del resultado.
           </p>
         </SectionHead>
         <ProjectGrid projects={featured.map((slug) => getProject(slug)!)} />

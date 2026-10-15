@@ -11,7 +11,7 @@ import { moments } from "@/content/voice";
 export const metadata: Metadata = {
   title: "Nosotros",
   description:
-    "DecorMG es una empresa de reformas de Madrid con base en Latina. Reformas integrales y parciales, con cada obra publicada con su antes.",
+    "DecorMG es una empresa de reformas de Madrid con base en Latina. Reformas integrales y parciales, con sus obras publicadas con su antes.",
   alternates: { canonical: "/nosotros" },
 };
 
@@ -28,7 +28,7 @@ export default function AboutPage() {
         lead={
           <p>
             Empresa de reformas de Madrid con base en Latina. Hacemos la reforma completa y el trabajo pequeño, y
-            enseñamos cada obra con su antes.
+            enseñamos nuestras obras con su antes.
           </p>
         }
       />
@@ -60,7 +60,7 @@ export default function AboutPage() {
             </h2>
             <div style={{ display: "grid", gap: 16, marginTop: 28, maxWidth: "62ch" }}>
               <p>
-                Publicamos cada obra con su antes, el barrio y la lista de lo que hicimos. Es nuestra forma de enseñar
+                En Instagram publicamos las obras con su antes, el barrio y la lista de lo que hicimos. Es nuestra forma de enseñar
                 el trabajo: en Las Águilas, Lucero, Aluche o Villaverde, el vecino puede ver qué se hizo cerca de su
                 casa.
               </p>

@@ -59,7 +59,9 @@ export default function LegalNoticePage() {
             <h2>Propiedad intelectual</h2>
             <p>
               Las fotografías de obras proceden de los canales públicos de {site.name} (Instagram, ficha de Google y perfil
-              de Cronoshare). Su uso en esta web está <Pending>autorización escrita de DecorMG para fotos y logotipo</Pending>.
+              de Cronoshare). Algunas de la ficha de Google las subieron clientes de {site.name}, no la empresa. Su uso en
+              esta web está <Pending>autorización escrita de DecorMG para fotos y logotipo, y de los clientes autores de las
+              fotos subidas a la ficha de Google</Pending>.
               Las opiniones citadas son extractos literales de opiniones públicas en Google y su publicación requiere
               permiso.
             </p>
